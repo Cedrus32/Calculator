@@ -54,6 +54,27 @@ function div(a, b) {
     return sum;
 }
 
+//TODO hookup to keys (don't worry about invalid args or case)
+//TODO clean up if...else statements
+//TODO check input against an array of keywords?
+function operate(operator, a, b) {
+    // console.log(typeof(operator));
+    // console.log(typeof(a));
+    // console.log(typeof(b));
+    if (operator === 'add') {
+        // console.log(a);
+        // console.log(b);
+        add(a, b);
+    } else if (operator === 'subtract') {
+        sub(a, b);
+    } else if (operator === 'multiply') {
+        mult(a, b);
+    } else if (operator === 'divide') {
+        div(a, b);
+    }
+    return sum;
+}
+
 // ------- //
 // TESTING //
 // ------- //
@@ -78,3 +99,15 @@ function div(a, b) {
 // console.log({mathTest});
 // mathTest = div(mathTest, 2);
 // console.log({mathTest});
+
+let operateTest = operate('add', 1, 2);
+console.log({operateTest});
+
+operateTest = operate('subtract', 1, 2);
+console.log({operateTest});
+
+operateTest = operate('multiply', 1, 2);
+console.log({operateTest});
+
+operateTest = operate('divide', 1, 2);
+console.log({operateTest});
