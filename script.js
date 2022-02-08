@@ -4,11 +4,13 @@
 
 //TODO clear arrays when 'clear' button is clicked
 
+let sum;
+
 //...add
 //WORKING with whole nums (+/-) && decimals (+/-) && 2+ inputs
 function add(a, b) {
     let nums = [a, b];
-    let sum = nums.reduce((total, number) => {
+    sum = nums.reduce((total, number) => {
         return total += number;
     });
     nums = [sum];
@@ -19,7 +21,7 @@ function add(a, b) {
 //WORKING with whole nums (+/-) && decimals (+/-) && 2+ inputs
 function sub(a, b) {
     let nums = [a, b];
-    let sum = nums.reduce((total, number) => {
+    sum = nums.reduce((total, number) => {
         return total -= number;
     });
     nums = [sum];
@@ -30,7 +32,7 @@ function sub(a, b) {
 //WORKING with whole nums (+/-) && decimals (+/-) && 2+ inputs
 function mult(a, b) {
     let nums = [a, b];
-    let sum = nums.reduce((total, number) => {
+    sum = nums.reduce((total, number) => {
         return total *= number;
     });
     nums = [sum];
@@ -42,7 +44,7 @@ function mult(a, b) {
 //NOT WORKING with 0 denominator mid-array
 function div(a, b) {
     let nums = [a, b]
-    let sum = nums.reduce((total, number) => {
+    sum = nums.reduce((total, number) => {
         if (number === 0) {
             return 'error';
         }
@@ -67,3 +69,12 @@ function div(a, b) {
 
 // divTest = div(0, 2);
 // console.log({divTest});
+
+// let mathTest = add(1, 5);
+// console.log({mathTest});
+// mathTest = sub(mathTest, 3);
+// console.log({mathTest});
+// mathTest = mult(mathTest, 2);
+// console.log({mathTest});
+// mathTest = div(mathTest, 2);
+// console.log({mathTest});
