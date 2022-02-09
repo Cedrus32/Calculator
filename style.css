@@ -1,4 +1,82 @@
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: black;
     color: white;
+    padding: 0px; margin: 0px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* ---------- */
+/* CALC. CASE */
+/* ---------- */
+
+.case {
+    display: flex;
+    flex-flow: column;
+    padding: 20px; margin: 0px;
+    gap: 20px;
+    border: 1px solid red;
+}
+
+/* ------------- */
+/* CALC. DISPLAY */
+/* ------------- */
+
+.display {
+    border: 1px solid grey;
+    height: 75px;
+    padding: 5px; margin: 0px;
+}
+
+.ops {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 25px;
+}
+
+.ans {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 50px;
+}
+
+/* ------------ */
+/* CALC. KEYPAD */
+/* ------------ */
+
+.keypad {
+    display: flex;
+    flex-flow: column;
+    gap: 20px;
+    border: 1px solid grey;
+}
+
+.row {
+    display: flex;
+    column-gap: 20px;
+}
+
+/* BORDER, SHAPE */
+button {
+    border: 1px solid yellow;
+    height: 50px;
+}
+
+/* SIZE */
+.threeX {
+    width: 73px;
+}
+
+.fourX {
+    width: 50px;
 }
