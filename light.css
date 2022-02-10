@@ -29,13 +29,13 @@ button {
 }
 
 .theme {
-    background-color: #7DAFAF;
+    background-color: #6BA79D;
 }
 
 #clear {
     background-color: #E36C2C;
 }
 
-#eq {
+.eq {
     background-color: #AFBB52;
 }
