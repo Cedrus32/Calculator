@@ -2,12 +2,11 @@
 // THEMES //
 // ------ //
 
+//TODO for finished, light is default
 //TODO for testing, dark is default...
 //TODO .html --> <link ... light.css>
 //TODO .html --> <link ... dark.css>
 //TODO .js --> toggle dark
-
-//TODO for finished, light is default
 
 function switchTheme(src) {
     const themeCSS = document.querySelectorAll('.theme-CSS');
@@ -16,19 +15,28 @@ function switchTheme(src) {
 
 const themeButtons = document.querySelectorAll('.theme');
 themeButtons[0].addEventListener('click', () => {
-    console.log('click light');
     switchTheme('./light.css');
 });
 
 themeButtons[1].addEventListener('click', () => {
-    console.log('click dark');
     switchTheme('./dark.css');
 });
+
+// ------ //
+// KEYPAD //
+// ------ //
+
+const buttonNums = document.querySelectorAll('.num');
+buttonNums.forEach(button => button.addEventListener('click', () => {
+    console.log(button.id);
+}));
 
 // -------------- //
 // MATH FUNCTIONS //
 // -------------- //
 
+//TODO hook up `nums` buttons to values
+//TODO hook up `funct` buttons to functions
 //TODO clear arrays when 'clear' button is clicked
 
 let sum;
@@ -81,7 +89,7 @@ function div(a, b) {
     return sum;
 }
 
-//TODO hookup to keys (don't worry about invalid args or case)
+//TODO hookup to buttons (don't worry about invalid args or case)
 //TODO clean up if...else statements
 //TODO check input against an array of keywords?
 function operate(operator, a, b) {
