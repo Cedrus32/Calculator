@@ -79,35 +79,3 @@ function operate(operator, a, b) {
 // TESTING //
 // ------- //
 
-// addTest = add(-5, -1.5);
-// console.log({addTest});
-
-// subTest = sub(10, -.5, 15);
-// console.log({subTest});
-
-// multTest = mult(2, 2.5);
-// console.log({multTest});
-
-// divTest = div(0, 2);
-// console.log({divTest});
-
-// let mathTest = add(1, 5);
-// console.log({mathTest});
-// mathTest = sub(mathTest, 3);
-// console.log({mathTest});
-// mathTest = mult(mathTest, 2);
-// console.log({mathTest});
-// mathTest = div(mathTest, 2);
-// console.log({mathTest});
-
-let operateTest = operate('add', 1, 2);
-console.log({operateTest});
-
-operateTest = operate('subtract', 1, 2);
-console.log({operateTest});
-
-operateTest = operate('multiply', 1, 2);
-console.log({operateTest});
-
-operateTest = operate('divide', 1, 2);
-console.log({operateTest});
