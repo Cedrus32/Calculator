@@ -58,12 +58,7 @@ function div(a, b) {
 //TODO clean up if...else statements
 //TODO check input against an array of keywords?
 function operate(operator, a, b) {
-    // console.log(typeof(operator));
-    // console.log(typeof(a));
-    // console.log(typeof(b));
     if (operator === 'add') {
-        // console.log(a);
-        // console.log(b);
         add(a, b);
     } else if (operator === 'subtract') {
         sub(a, b);
