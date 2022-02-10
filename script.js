@@ -38,12 +38,13 @@ buttonFuncts.forEach(button => button.addEventListener('click', () => {
     console.log(button.id);
 }))
 
+//TODO clear --> clear value array && display
+
+//TODO = --> run math function & update display
+
 // -------------- //
 // MATH FUNCTIONS //
 // -------------- //
-
-//TODO hook up `funct` buttons to functions
-//TODO clear arrays when 'clear' button is clicked
 
 let sum;
 
@@ -95,18 +96,19 @@ function div(a, b) {
     return sum;
 }
 
-//TODO hookup to buttons (don't worry about invalid args or case)
-//TODO clean up if...else statements
-//TODO check input against an array of keywords?
 function operate(operator, a, b) {
-    if (operator === 'add') {
-        add(a, b);
-    } else if (operator === 'subtract') {
-        sub(a, b);
-    } else if (operator === 'multiply') {
-        mult(a, b);
-    } else if (operator === 'divide') {
-        div(a, b);
+    switch (operator) {
+        case '+':
+            add(a, b);
+            break;
+        case '-':
+            sub(a, b);
+            break;
+        case 'x':
+            mult(a, b);
+            break;
+        case '/':
+            div(a, b);
     }
     return sum;
 }
