@@ -26,16 +26,22 @@ themeButtons[1].addEventListener('click', () => {
 // KEYPAD //
 // ------ //
 
+//TODO store button.id in array --> to pass to display & functions
+
 const buttonNums = document.querySelectorAll('.num');
 buttonNums.forEach(button => button.addEventListener('click', () => {
     console.log(button.id);
 }));
 
+const buttonFuncts = document.querySelectorAll('.function');
+buttonFuncts.forEach(button => button.addEventListener('click', () => {
+    console.log(button.id);
+}))
+
 // -------------- //
 // MATH FUNCTIONS //
 // -------------- //
 
-//TODO hook up `nums` buttons to values
 //TODO hook up `funct` buttons to functions
 //TODO clear arrays when 'clear' button is clicked
 
