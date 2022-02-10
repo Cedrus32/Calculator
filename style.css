@@ -3,6 +3,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 0px; margin: 0px;
+    font-family: 'SourceCodePro', 'Courier New', monospace;
 }
 
 .container {
@@ -10,6 +11,11 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+
+@font-face {
+    font-family: 'SourceCodePro';
+    src: url(./SourceCodePro.ttf);
 }
 
 /* ---------- */
@@ -39,6 +45,7 @@ body {
     justify-content: flex-end;
     align-items: center;
     height: 26px;
+    font-size: 14px;
 }
 
 .ans {
@@ -46,6 +53,7 @@ body {
     justify-content: flex-end;
     align-items: flex-end;
     height: 52px;
+    font-size: 36px;
 }
 
 /* ------------ */
@@ -63,11 +71,13 @@ body {
     column-gap: 20px;
 }
 
-/* HEIGHT & GENERAL STYLING */
+/* BUTTON HEIGHT & SHAPE */
 button {
     border: none;
     border-radius: 5px;
     height: 52px;
+    font-family: 'SourceCodePro', 'Courier New', monospace;
+    font-size: 16px;
 }
 
 /* WIDTH ONLY */

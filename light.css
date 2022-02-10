@@ -1,3 +1,7 @@
+/* ------------------ */
+/* LIGHT THEME COLORS */
+/* ------------------ */
+
 body {
     background-color: #FCF6E5;
 }
@@ -11,6 +15,7 @@ button {
 }
 
 .display {
+    background-color: #E5E4D4;
     border: 1px solid #839496;
     color: #839496;
 }

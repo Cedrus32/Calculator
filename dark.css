@@ -1,3 +1,7 @@
+/* ----------------- */
+/* DARK THEME COLORS */
+/* ----------------- */
+
 body {
     background-color: #002b36;
 }
@@ -11,6 +15,7 @@ button {
 }
 
 .display {
+    background-color: #173746;
     border: 1px solid #839496;
     color: #839496;
 }
