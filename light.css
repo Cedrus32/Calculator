@@ -1,0 +1,36 @@
+body {
+    background-color: #FCF6E5;
+}
+
+button {
+    color: #073642;
+}
+
+.case {
+    background-color: #eee8d5;
+}
+
+.display {
+    border: 1px solid #839496;
+    color: #839496;
+}
+
+.function {
+    background-color: #D7D7C9;
+}
+
+.num {
+    background-color: #C0C4B3;
+}
+
+.theme {
+    background-color: #7DAFAF;
+}
+
+#clear {
+    background-color: #E36C2C;
+}
+
+#eq {
+    background-color: #AFBB52;
+}
