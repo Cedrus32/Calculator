@@ -1,3 +1,30 @@
+// ------ //
+// THEMES //
+// ------ //
+
+//TODO for testing, dark is default...
+//TODO .html --> <link ... light.css>
+//TODO .html --> <link ... dark.css>
+//TODO .js --> toggle dark
+
+//TODO for finished, light is default
+
+function switchTheme(src) {
+    const themeCSS = document.querySelectorAll('.theme-CSS');
+    themeCSS[1].href = src;
+}
+
+const themeButtons = document.querySelectorAll('.theme');
+themeButtons[0].addEventListener('click', () => {
+    console.log('click light');
+    switchTheme('./light.css');
+});
+
+themeButtons[1].addEventListener('click', () => {
+    console.log('click dark');
+    switchTheme('./dark.css');
+});
+
 // -------------- //
 // MATH FUNCTIONS //
 // -------------- //
