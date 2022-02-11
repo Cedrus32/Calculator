@@ -26,50 +26,6 @@ themeButtons[1].addEventListener('click', () => {
 });
 
 
-// ---------------- //
-// DISPLAY & KEYPAD //
-// ---------------- //
-
-
-//get display elements
-let displayValues = [];
-const displayFormula = document.querySelector('.formula');
-const displayProduct = document.querySelector('.product');
-console.log({displayFormula});
-console.log({displayProduct});
-
-//show display elements...
-function displayElements(button) {
-    displayValues.push(button.id);
-    displayFormula.textContent += button.id;
-}
-
-//get & store number IDs --> send to display...
-const buttonNums = document.querySelectorAll('.num');
-buttonNums.forEach(button => button.addEventListener('click', () => {
-    displayElements(button);
-}));
-
-//get & store function IDs --> send to display...
-const buttonFuncts = document.querySelectorAll('.function');
-buttonFuncts.forEach(button => button.addEventListener('click', () => {
-    displayElements(button);
-}))
-
-//clear display & displayValues
-const buttonClear = document.querySelector('#clear');
-buttonClear.addEventListener('click', () => {
-    displayFormula.textContent = '';
-    displayProduct.textContent = '';
-    displayValues = [];
-});
-
-//TODO = --> run math function & update display
-const buttonEquals = document.querySelector('.eq');
-buttonEquals.addEventListener('click', () => {
-    displayProduct.textContent = displayFormula.textContent;
-});
-
 // -------------- //
 // MATH FUNCTIONS //
 // -------------- //
@@ -125,21 +81,92 @@ function div(a, b) {
 }
 
 function operate(operator, a, b) {
+    let x = Number(a);
+    let y = Number(b)
     switch (operator) {
         case '+':
-            add(a, b);
+            add(x, y);
             break;
         case '-':
-            sub(a, b);
+            sub(x, y);
             break;
         case 'x':
-            mult(a, b);
+            mult(x, y);
             break;
         case '/':
-            div(a, b);
+            div(x, y);
     }
     return sum;
 }
+
+
+// -------------- //
+// RUN CALCULATOR //
+// -------------- //
+
+//get display elements
+let displayValues = [];
+const displayFormula = document.querySelector('.formula');
+const displayProduct = document.querySelector('.product');
+
+//TODO = --> run math function & update display
+//run math operation...
+const buttonEquals = document.querySelector('.eq');
+buttonEquals.addEventListener('click', () => {
+    //add second value to displayValues
+    displayValues.push(a);
+    a = '';
+    console.log(displayValues);
+    //run math calculation...
+    operate(displayValues[1], displayValues[0], displayValues[2]);
+    displayProduct.textContent = sum;
+});
+
+//clear display & displayValues
+const buttonClear = document.querySelector('#clear');
+buttonClear.addEventListener('click', () => {
+    a = '';
+    displayFormula.textContent = '';
+    displayProduct.textContent = '';
+    displayValues = [];
+    console.log({displayValues});
+});
+
+//run calculator...
+let a = '';
+let b = '';
+let operator = '';
+function runCalc(button) {
+    //get button.classList
+    let buttonClasses = button.classList;
+    //if num, concat
+    if (buttonClasses[1] === 'num') {
+        a += button.id;
+        console.log(a);
+    // else if function, add first value & operator to displayValues
+    } else if (buttonClasses[1] === 'function') {
+        console.log(a);
+        displayValues.push(a);
+        a = '';
+        displayValues.push(button.id);
+        console.log(displayValues);
+    }
+    //show values on calculator interface
+    displayFormula.textContent += button.id;
+}
+
+//get & store number IDs --> send to display...
+const buttonNums = document.querySelectorAll('.num');
+buttonNums.forEach(button => button.addEventListener('click', () => {
+    runCalc(button);
+}));
+
+//get & store function IDs --> send to display...
+const buttonFuncts = document.querySelectorAll('.function');
+buttonFuncts.forEach(button => button.addEventListener('click', () => {
+    runCalc(button);
+}))
+
 
 // ------- //
 // TESTING //
