@@ -30,34 +30,45 @@ themeButtons[1].addEventListener('click', () => {
 // DISPLAY & KEYPAD //
 // ---------------- //
 
-//TODO scrub array so display is accurate
+
 //get display elements
 let displayValues = [];
-const displayCurrent = document.querySelector('.current');
+const displayFormula = document.querySelector('.formula');
+const displayProduct = document.querySelector('.product');
+console.log({displayFormula});
+console.log({displayProduct});
+
+//show display elements...
+function displayElements(button) {
+    displayValues.push(button.id);
+    displayFormula.textContent += button.id;
+}
 
 //get & store number IDs --> send to display...
 const buttonNums = document.querySelectorAll('.num');
 buttonNums.forEach(button => button.addEventListener('click', () => {
-    displayValues.push(button.id);
-    // console.log(button.id);
-    console.log(displayValues);
-    //TODO link to display here
-    displayCurrent.textContent = displayValues;
+    displayElements(button);
 }));
 
 //get & store function IDs --> send to display...
 const buttonFuncts = document.querySelectorAll('.function');
 buttonFuncts.forEach(button => button.addEventListener('click', () => {
-    displayValues.push(button.id);
-    // console.log(button.id);
-    console.log(displayValues);
-    //TODO link to display here
-    displayCurrent.textContent = displayValues;
+    displayElements(button);
 }))
 
-//TODO clear --> clear value array && display
+//clear display & displayValues
+const buttonClear = document.querySelector('#clear');
+buttonClear.addEventListener('click', () => {
+    displayFormula.textContent = '';
+    displayProduct.textContent = '';
+    displayValues = [];
+});
 
 //TODO = --> run math function & update display
+const buttonEquals = document.querySelector('.eq');
+buttonEquals.addEventListener('click', () => {
+    displayProduct.textContent = displayFormula.textContent;
+});
 
 // -------------- //
 // MATH FUNCTIONS //
