@@ -109,27 +109,39 @@ let displayValues = [];
 const displayFormula = document.querySelector('.formula');
 const displayProduct = document.querySelector('.product');
 
-//TODO = --> run math function & update display
+//update display...
+function updateValues() {
+    //evaluate function
+    operate(displayValues[1], displayValues[0], displayValues[2]);
+    //display sum
+    displayProduct.textContent = sum;
+    //remove a & operator
+    displayValues.shift();
+    displayValues.shift();
+    //reset a = sum
+    displayValues[0] = sum;
+    console.log(displayValues);
+}
+
 //run math operation...
 const buttonEquals = document.querySelector('.eq');
 buttonEquals.addEventListener('click', () => {
     //add second value to displayValues
     displayValues.push(a);
     a = '';
-    console.log(displayValues);
-    //run math calculation...
-    operate(displayValues[1], displayValues[0], displayValues[2]);
-    displayProduct.textContent = sum;
+   updateValues();
 });
 
 //clear display & displayValues
 const buttonClear = document.querySelector('#clear');
 buttonClear.addEventListener('click', () => {
     a = '';
+    b = '';
     displayFormula.textContent = '';
     displayProduct.textContent = '';
     displayValues = [];
-    console.log({displayValues});
+    sum = '';
+    console.log(displayValues);
 });
 
 //run calculator...
@@ -137,22 +149,36 @@ let a = '';
 let b = '';
 let operator = '';
 function runCalc(button) {
+
     //get button.classList
     let buttonClasses = button.classList;
+
+    //get values for display & operations
     //if num, concat
     if (buttonClasses[1] === 'num') {
         a += button.id;
+        displayFormula.textContent += button.id;
         console.log(a);
-    // else if function, add first value & operator to displayValues
+    // else if function, add a & operator to displayValues
     } else if (buttonClasses[1] === 'function') {
-        console.log(a);
-        displayValues.push(a);
-        a = '';
+        if (a != '') {
+            displayValues.push(a);
+        }
         displayValues.push(button.id);
-        console.log(displayValues);
+        displayFormula.textContent += ` ${button.id} `;
+        a = '';
     }
-    //show values on calculator interface
-    displayFormula.textContent += button.id;
+
+
+
+    //manage how many values operating at a time
+    //if length > 3, replace [0]/[1] with sum...
+    if (displayValues.length > 3) {
+        console.log(displayValues);
+        updateValues();
+    }
+
+    console.log(displayValues);
 }
 
 //get & store number IDs --> send to display...
