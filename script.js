@@ -152,6 +152,15 @@ function updateValues() {
     mathValues[0] = sum;
 }
 
+function clearCalc() {
+    a = '';
+    displayFormula.textContent = ' ';
+    displayProduct.textContent = ' ';
+    mathValues = [];
+    displayValues = [];
+    sum = '';
+}
+
 //run math operation...
 const buttonEquals = document.querySelector('.eq');
 buttonEquals.addEventListener('click', () => {
@@ -170,13 +179,7 @@ buttonEquals.addEventListener('click', () => {
 //clear display & displayValues
 const buttonClear = document.querySelector('#clear');
 buttonClear.addEventListener('click', () => {
-    a = '';
-    b = '';
-    displayFormula.textContent = ' ';
-    displayProduct.textContent = ' ';
-    mathValues = [];
-    displayValues = [];
-    sum = '';
+    clearCalc();
 });
 
 //run calculator...
@@ -184,21 +187,25 @@ let a = '';
 // let b = '';
 let operator = '';
 function runCalc(button) {
-
-    //**happens if `=` button was previously selected
-    //update math array, move to formula display
-    if (mathValues[1] === '=') {
-        scrubEqCheck();
-    }
+    console.log(mathValues);
 
     //get button.classList
     let buttonClasses = button.classList;
 
     //get values for display & operations
     if (buttonClasses[1] === 'num') {
+        //clear calculator
+        if (mathValues[1] === '=') {
+            clearCalc();
+        }
         a += button.id;
         displayFormula.textContent += button.id;
     } else if (buttonClasses[1] === 'function') {
+        //** if `=` button was previously selected
+        //update math array, move to formula display
+        if (mathValues[1] === '=') {
+            scrubEqCheck();
+        }
         console.log('enter function');
         //add a to arrays
         if (a != '') {
@@ -215,13 +222,13 @@ function runCalc(button) {
         a = '';
     }
 
-    //** happens if 2 functions selected sequentially
+    //** if 2 functions selected sequentially
     //replace original function with second function (both arrays)
     if (mathValues.length === 3) {
         replaceOperators();
     }
 
-    //** happens when operating multiple numbers w/out hitting `=`
+    //** when operating multiple numbers w/out hitting `=`
     //replace math array [0]/[1] with sum...
     if (mathValues.length > 3) {
         updateValues();
