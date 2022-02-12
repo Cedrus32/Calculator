@@ -20,7 +20,7 @@ button {
     color: #839496;
 }
 
-.function {
+.function, .pos-neg {
     background-color: #32596B;
 }
 
@@ -32,7 +32,7 @@ button {
     background-color: #1B5E54;
 }
 
-#clear {
+.clear {
     background-color: #A1441C;
 }
 
