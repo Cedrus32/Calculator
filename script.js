@@ -80,6 +80,7 @@ function div(a, b) {
     return sum;
 }
 
+//...math switch...
 function operate(operator, a, b) {
     let x = Number(a);
     let y = Number(b)
@@ -105,31 +106,65 @@ function operate(operator, a, b) {
 // -------------- //
 
 //get display elements
+let mathValues = [];
 let displayValues = [];
 const displayFormula = document.querySelector('.formula');
 const displayProduct = document.querySelector('.product');
 
-//update display...
+//** if `=` button is selected
+//...scrub 'equals' check...
+function scrubEqCheck() {
+    console.log('scrub = ...')
+    //remove '=' from math array
+    mathValues.pop();
+    //update display array to math array (sum)
+    displayValues.splice(1);
+    displayValues[0] = sum;
+    //update formula display (sum) & answer display ('')
+    displayFormula.textContent = displayValues;
+    displayProduct.textContent = '';
+}
+
+//** if 2 functions selected sequentially
+//...replace operators...
+function replaceOperators() {
+    //replace/remove functions (operatorValues)
+    mathValues[1] = mathValues[2];
+    mathValues.pop();
+    //replace/remove functions (displayValues)
+    displayValues[1] = displayValues[2];
+    displayValues.pop();
+    //update display
+    displayFormula.textContent = displayValues.join(' ');
+}
+
+//** cacluate sum & update math array
+//...update display/math values...
 function updateValues() {
     //evaluate function
-    operate(displayValues[1], displayValues[0], displayValues[2]);
+    operate(mathValues[1], mathValues[0], mathValues[2]);
     //display sum
     displayProduct.textContent = sum;
     //remove a & operator
-    displayValues.shift();
-    displayValues.shift();
+    mathValues.shift();
+    mathValues.shift();
     //reset a = sum
-    displayValues[0] = sum;
-    console.log(displayValues);
+    mathValues[0] = sum;
 }
 
 //run math operation...
 const buttonEquals = document.querySelector('.eq');
 buttonEquals.addEventListener('click', () => {
-    //add second value to displayValues
+    console.log('click = ...')
+    //add second value to math array
+    a = Number(a);
+    mathValues.push(a);
     displayValues.push(a);
     a = '';
-   updateValues();
+    //update math array...
+    updateValues();
+    //include '=' in math array
+    mathValues.push('=');
 });
 
 //clear display & displayValues
@@ -137,48 +172,60 @@ const buttonClear = document.querySelector('#clear');
 buttonClear.addEventListener('click', () => {
     a = '';
     b = '';
-    displayFormula.textContent = '';
-    displayProduct.textContent = '';
+    displayFormula.textContent = ' ';
+    displayProduct.textContent = ' ';
+    mathValues = [];
     displayValues = [];
     sum = '';
-    console.log(displayValues);
 });
 
 //run calculator...
 let a = '';
-let b = '';
+// let b = '';
 let operator = '';
 function runCalc(button) {
+
+    //**happens if `=` button was previously selected
+    //update math array, move to formula display
+    if (mathValues[1] === '=') {
+        scrubEqCheck();
+    }
 
     //get button.classList
     let buttonClasses = button.classList;
 
     //get values for display & operations
-    //if num, concat
     if (buttonClasses[1] === 'num') {
         a += button.id;
         displayFormula.textContent += button.id;
-        console.log(a);
-    // else if function, add a & operator to displayValues
     } else if (buttonClasses[1] === 'function') {
+        console.log('enter function');
+        //add a to arrays
         if (a != '') {
+            a = Number(a);
+            mathValues.push(a);
             displayValues.push(a);
         }
+        //add function to arrays -- WORKING -- mathValues is correct
+        mathValues.push(button.id);
         displayValues.push(button.id);
-        displayFormula.textContent += ` ${button.id} `;
+        //update display
+        displayFormula.textContent = displayValues.join(' ');
+        displayFormula.textContent += ' ';
         a = '';
     }
 
-
-
-    //manage how many values operating at a time
-    //if length > 3, replace [0]/[1] with sum...
-    if (displayValues.length > 3) {
-        console.log(displayValues);
-        updateValues();
+    //** happens if 2 functions selected sequentially
+    //replace original function with second function (both arrays)
+    if (mathValues.length === 3) {
+        replaceOperators();
     }
 
-    console.log(displayValues);
+    //** happens when operating multiple numbers w/out hitting `=`
+    //replace math array [0]/[1] with sum...
+    if (mathValues.length > 3) {
+        updateValues();
+    }
 }
 
 //get & store number IDs --> send to display...
