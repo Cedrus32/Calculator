@@ -106,6 +106,7 @@ function operate(operator, a, b) {
 // ------------------------ //
 
 //get display elements
+let a = '';
 let mathValues = [];
 let displayValues = [];
 const displayFormula = document.querySelector('.formula');
@@ -163,8 +164,14 @@ function clearCalc() {
     sum = '';
 }
 
+//toggle positive/negative value
+function toggleNeg() {
+    console.log(a);
+    a *= -1;
+    displayFormula.textContent = displayValues.join(' ') + ' ' + a;
+}
+
 //log functions...
-let a = '';
 function logFuncts(button) {
     console.log(a);
     //if `=` button was previously selected,
@@ -231,6 +238,12 @@ buttonEquals.addEventListener('click', () => {
 const buttonClear = document.querySelector('#clear');
 buttonClear.addEventListener('click', () => {
     clearCalc();
+});
+
+//toggle positive/negative
+const buttonPosNeg = document.querySelector('#pos-neg');
+buttonPosNeg.addEventListener('click', () => {
+    toggleNeg();
 });
 
 //get & store number IDs --> send to display...
