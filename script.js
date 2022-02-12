@@ -163,44 +163,29 @@ function clearCalc() {
     sum = '';
 }
 
-//run calculator...
+//log functions...
 let a = '';
-function runCalc(button) {
-
-    //get button.classList
-    let buttonClasses = button.classList;
-
-    //if num...
-    if (buttonClasses[1] === 'num') {
-        //clear calculator
-        if (mathValues[1] === '=') {
-            clearCalc();
-        }
-        //concat a, update displayFormula
-        a += button.id;
-        displayFormula.textContent += button.id;
-
-    //if function...
-    } else if (buttonClasses[1] === 'function') {
-        //if `=` button was previously selected,
-        //scrub math array, show sum on formula display
-        if (mathValues[1] === '=') {
-            scrubEqCheck();
-            displayFormula.textContent = sum;
-            displayProduct.textContent = '';
-        }
-        //if a != null, add a to arrays
-        if (a != '') {
-            pushA2Arrays()
-        }
-        //add function to arrays
-        mathValues.push(button.id);
-        displayValues.push(button.id);
-        //update display
-        displayFormula.textContent = displayValues.join(' ');
-        displayFormula.textContent += ' ';
-        a = '';
+function logFuncts(button) {
+    console.log(a);
+    //if `=` button was previously selected,
+    //scrub math array, show sum on formula display
+    if (mathValues[1] === '=') {
+        scrubEqCheck();
+        displayFormula.textContent = sum;
+        displayProduct.textContent = '';
     }
+    //if a != null, add a to arrays
+    if (a != '') {
+        pushA2Arrays()
+    }
+
+    //add function to arrays
+    mathValues.push(button.id);
+    displayValues.push(button.id);
+    //update display
+    displayFormula.textContent = displayValues.join(' ');
+    displayFormula.textContent += ' ';
+    a = '';
 
     //** if 2 functions selected sequentially
     //replace original function with second function (both arrays)
@@ -213,6 +198,17 @@ function runCalc(button) {
     if (mathValues.length > 3) {
         updateMathArray();
     }
+}
+
+//log numbers...
+function logNums(button) {
+    //if entering a number after getting sum
+    if (mathValues[1] === '=') {
+        clearCalc();
+    }
+    //concat a, update displayFormula
+    a += button.id;
+    displayFormula.textContent += button.id;
 }
 
 // ---------------- //
@@ -240,11 +236,11 @@ buttonClear.addEventListener('click', () => {
 //get & store number IDs --> send to display...
 const buttonNums = document.querySelectorAll('.num');
 buttonNums.forEach(button => button.addEventListener('click', () => {
-    runCalc(button);
+    logNums(button);
 }));
 
 //get & store function IDs --> send to display...
 const buttonFuncts = document.querySelectorAll('.function');
 buttonFuncts.forEach(button => button.addEventListener('click', () => {
-    runCalc(button);
+    logFuncts(button);
 }))
