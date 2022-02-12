@@ -166,8 +166,13 @@ function clearCalc() {
 
 //toggle positive/negative value
 function toggleNeg() {
-    console.log(a);
-    a *= -1;
+    if (a === '') {
+        a = '-'
+    } else if (a === '-') {
+        a = '';
+    } else if (a !== '' && a !== '-') {
+        a *= -1;
+    }
     displayFormula.textContent = displayValues.join(' ') + ' ' + a;
 }
 
