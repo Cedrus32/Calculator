@@ -101,9 +101,9 @@ function operate(operator, a, b) {
 }
 
 
-// -------------- //
-// RUN CALCULATOR //
-// -------------- //
+// ------------------------ //
+// CALCULATOR FUNCTIONALITY //
+// ------------------------ //
 
 //get display elements
 let mathValues = [];
@@ -114,15 +114,11 @@ const displayProduct = document.querySelector('.product');
 //** if `=` button is selected
 //...scrub 'equals' check...
 function scrubEqCheck() {
-    console.log('scrub = ...')
     //remove '=' from math array
     mathValues.pop();
     //update display array to math array (sum)
     displayValues.splice(1);
     displayValues[0] = sum;
-    //update formula display (sum) & answer display ('')
-    displayFormula.textContent = displayValues;
-    displayProduct.textContent = '';
 }
 
 //** if 2 functions selected sequentially
@@ -138,9 +134,15 @@ function replaceOperators() {
     displayFormula.textContent = displayValues.join(' ');
 }
 
+function pushA2Arrays() {
+    a = Number(a);
+    mathValues.push(a);
+    displayValues.push(a);
+}
+
 //** cacluate sum & update math array
 //...update display/math values...
-function updateValues() {
+function updateMathArray() {
     //evaluate function
     operate(mathValues[1], mathValues[0], mathValues[2]);
     //display sum
@@ -161,59 +163,37 @@ function clearCalc() {
     sum = '';
 }
 
-//run math operation...
-const buttonEquals = document.querySelector('.eq');
-buttonEquals.addEventListener('click', () => {
-    console.log('click = ...')
-    //add second value to math array
-    a = Number(a);
-    mathValues.push(a);
-    displayValues.push(a);
-    a = '';
-    //update math array...
-    updateValues();
-    //include '=' in math array
-    mathValues.push('=');
-});
-
-//clear display & displayValues
-const buttonClear = document.querySelector('#clear');
-buttonClear.addEventListener('click', () => {
-    clearCalc();
-});
-
 //run calculator...
 let a = '';
-// let b = '';
-let operator = '';
 function runCalc(button) {
-    console.log(mathValues);
 
     //get button.classList
     let buttonClasses = button.classList;
 
-    //get values for display & operations
+    //if num...
     if (buttonClasses[1] === 'num') {
         //clear calculator
         if (mathValues[1] === '=') {
             clearCalc();
         }
+        //concat a, update displayFormula
         a += button.id;
         displayFormula.textContent += button.id;
+
+    //if function...
     } else if (buttonClasses[1] === 'function') {
-        //** if `=` button was previously selected
-        //update math array, move to formula display
+        //if `=` button was previously selected,
+        //scrub math array, show sum on formula display
         if (mathValues[1] === '=') {
             scrubEqCheck();
+            displayFormula.textContent = sum;
+            displayProduct.textContent = '';
         }
-        console.log('enter function');
-        //add a to arrays
+        //if a != null, add a to arrays
         if (a != '') {
-            a = Number(a);
-            mathValues.push(a);
-            displayValues.push(a);
+            pushA2Arrays()
         }
-        //add function to arrays -- WORKING -- mathValues is correct
+        //add function to arrays
         mathValues.push(button.id);
         displayValues.push(button.id);
         //update display
@@ -231,9 +211,31 @@ function runCalc(button) {
     //** when operating multiple numbers w/out hitting `=`
     //replace math array [0]/[1] with sum...
     if (mathValues.length > 3) {
-        updateValues();
+        updateMathArray();
     }
 }
+
+// ---------------- //
+// BUTTON LISTENERS //
+// ---------------- //
+
+//run math operation...
+const buttonEquals = document.querySelector('.eq');
+buttonEquals.addEventListener('click', () => {
+    //add second value to math array
+    pushA2Arrays()
+    a = '';
+    //update math array...
+    updateMathArray();
+    //include '=' in math array
+    mathValues.push('=');
+});
+
+//clear display & displayValues
+const buttonClear = document.querySelector('#clear');
+buttonClear.addEventListener('click', () => {
+    clearCalc();
+});
 
 //get & store number IDs --> send to display...
 const buttonNums = document.querySelectorAll('.num');
@@ -246,9 +248,3 @@ const buttonFuncts = document.querySelectorAll('.function');
 buttonFuncts.forEach(button => button.addEventListener('click', () => {
     runCalc(button);
 }))
-
-
-// ------- //
-// TESTING //
-// ------- //
-
