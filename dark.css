@@ -24,7 +24,7 @@ button {
     background-color: #32596B;
 }
 
-.num {
+.num, .dec {
     background-color: #244958;
 }
 
