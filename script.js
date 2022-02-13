@@ -112,6 +112,7 @@ let displayValues = [];
 const displayFormula = document.querySelector('.formula');
 const displayProduct = document.querySelector('.product');
 
+//clear calculator...
 function clearCalc() {
     a = '';
     displayFormula.textContent = ' ';
@@ -127,7 +128,7 @@ function deleteNum() {
     displayFormula.textContent = displayValues.join(' ') + ' ' + a;
 }
 
-//toggle positive/negative value
+//toggle positive/negative value...
 function toggleNeg() {
     if (a === '') {
         a = '-'
@@ -150,8 +151,7 @@ function logNums(button) {
     displayFormula.textContent += button.id;
 }
 
-//** if `=` button is selected
-//...scrub 'equals' check...
+//scrub 'equals' check...
 function scrubEqCheck() {
     //remove '=' from math array
     mathValues.pop();
@@ -162,6 +162,7 @@ function scrubEqCheck() {
 
 //log functions...
 function logFuncts(button) {
+
     //if `=` button was previously selected,
     //scrub math array, show sum on formula display
     if (mathValues[1] === '=') {
@@ -169,8 +170,8 @@ function logFuncts(button) {
         displayFormula.textContent = sum;
         displayProduct.textContent = '';
     }
-    //if a != null, add a to arrays
-    if (a != '') {
+    //if a !== null, add a to arrays
+    if (a !== '') {
         pushA2Arrays()
     }
 
@@ -182,27 +183,27 @@ function logFuncts(button) {
     displayFormula.textContent += ' ';
     a = '';
 
-    //** if 2 functions selected sequentially
+    //if 2 functions selected sequentially
     //replace original function with second function (both arrays)
     if (mathValues.length === 3) {
         replaceOperators();
     }
 
-    //** when operating multiple numbers w/out hitting `=`
+    //when operating multiple numbers w/out hitting `=`
     //replace math array [0]/[1] with sum...
     if (mathValues.length > 3) {
         updateMathArray();
     }
 }
 
+//push a to both arrays...
 function pushA2Arrays() {
     a = Number(a);
     mathValues.push(a);
     displayValues.push(a);
 }
 
-//** if 2 functions selected sequentially
-//...replace operators...
+//replace operators...
 function replaceOperators() {
     //replace/remove functions (operatorValues)
     mathValues[1] = mathValues[2];
@@ -214,8 +215,7 @@ function replaceOperators() {
     displayFormula.textContent = displayValues.join(' ');
 }
 
-//** cacluate sum & update math array
-//...update display/math values...
+//update display/math values...
 function updateMathArray() {
     //evaluate function
     operate(mathValues[1], mathValues[0], mathValues[2]);
