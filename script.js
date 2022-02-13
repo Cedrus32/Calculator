@@ -96,6 +96,14 @@ function operate(operator, a, b) {
             break;
         case '/':
             div(x, y);
+            break;
+        //TODO
+        case '√':
+            sqrt(x, y);
+            break;
+        //TODO
+        case '%':
+            cent(x, y);
     }
     return sum;
 }
@@ -250,7 +258,7 @@ buttonPosNeg.addEventListener('click', () => {
     toggleNeg();
 });
 
-//get & store number IDs --> send to display...
+//work number keys...
 const buttonNums = document.querySelectorAll('.num');
 buttonNums.forEach(button => button.addEventListener('click', () => {
     if (displayProduct.textContent === 'error') {
@@ -259,7 +267,7 @@ buttonNums.forEach(button => button.addEventListener('click', () => {
     logNums(button);
 }));
 
-//get & store function IDs --> send to display...
+//work function keys..
 const buttonFuncts = document.querySelectorAll('.function');
 buttonFuncts.forEach(button => button.addEventListener('click', () => {
     if (displayProduct.textContent === 'error') {
@@ -268,7 +276,7 @@ buttonFuncts.forEach(button => button.addEventListener('click', () => {
     logFuncts(button);
 }))
 
-//select `=`, run math operation...
+//work math operations...
 const buttonEquals = document.querySelector('.eq');
 buttonEquals.addEventListener('click', () => {
     if (mathValues.length === 0 || (mathValues.length === 2 && a === '')) {
