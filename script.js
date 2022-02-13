@@ -112,49 +112,6 @@ let displayValues = [];
 const displayFormula = document.querySelector('.formula');
 const displayProduct = document.querySelector('.product');
 
-//** if `=` button is selected
-//...scrub 'equals' check...
-function scrubEqCheck() {
-    //remove '=' from math array
-    mathValues.pop();
-    //update display array to math array (sum)
-    displayValues.splice(1);
-    displayValues[0] = sum;
-}
-
-//** if 2 functions selected sequentially
-//...replace operators...
-function replaceOperators() {
-    //replace/remove functions (operatorValues)
-    mathValues[1] = mathValues[2];
-    mathValues.pop();
-    //replace/remove functions (displayValues)
-    displayValues[1] = displayValues[2];
-    displayValues.pop();
-    //update display
-    displayFormula.textContent = displayValues.join(' ');
-}
-
-function pushA2Arrays() {
-    a = Number(a);
-    mathValues.push(a);
-    displayValues.push(a);
-}
-
-//** cacluate sum & update math array
-//...update display/math values...
-function updateMathArray() {
-    //evaluate function
-    operate(mathValues[1], mathValues[0], mathValues[2]);
-    //display sum
-    displayProduct.textContent = sum;
-    //remove a & operator
-    mathValues.shift();
-    mathValues.shift();
-    //reset a = sum
-    mathValues[0] = sum;
-}
-
 function clearCalc() {
     a = '';
     displayFormula.textContent = ' ';
@@ -162,6 +119,12 @@ function clearCalc() {
     mathValues = [];
     displayValues = [];
     sum = '';
+}
+
+//delete number...
+function deleteNum() {
+    a = a.slice(0, -1);
+    displayFormula.textContent = displayValues.join(' ') + ' ' + a;
 }
 
 //toggle positive/negative value
@@ -176,9 +139,29 @@ function toggleNeg() {
     displayFormula.textContent = displayValues.join(' ') + ' ' + a;
 }
 
+//log numbers...
+function logNums(button) {
+    //if entering a number after getting sum
+    if (mathValues[1] === '=') {
+        clearCalc();
+    }
+    //concat a, update displayFormula
+    a += button.id;
+    displayFormula.textContent += button.id;
+}
+
+//** if `=` button is selected
+//...scrub 'equals' check...
+function scrubEqCheck() {
+    //remove '=' from math array
+    mathValues.pop();
+    //update display array to math array (sum)
+    displayValues.splice(1);
+    displayValues[0] = sum;
+}
+
 //log functions...
 function logFuncts(button) {
-    console.log(a);
     //if `=` button was previously selected,
     //scrub math array, show sum on formula display
     if (mathValues[1] === '=') {
@@ -212,21 +195,37 @@ function logFuncts(button) {
     }
 }
 
-//delete number...
-function deleteNum() {
-    a = a.slice(0, -1);
-    displayFormula.textContent = displayValues.join(' ') + ' ' + a;
+function pushA2Arrays() {
+    a = Number(a);
+    mathValues.push(a);
+    displayValues.push(a);
 }
 
-//log numbers...
-function logNums(button) {
-    //if entering a number after getting sum
-    if (mathValues[1] === '=') {
-        clearCalc();
-    }
-    //concat a, update displayFormula
-    a += button.id;
-    displayFormula.textContent += button.id;
+//** if 2 functions selected sequentially
+//...replace operators...
+function replaceOperators() {
+    //replace/remove functions (operatorValues)
+    mathValues[1] = mathValues[2];
+    mathValues.pop();
+    //replace/remove functions (displayValues)
+    displayValues[1] = displayValues[2];
+    displayValues.pop();
+    //update display
+    displayFormula.textContent = displayValues.join(' ');
+}
+
+//** cacluate sum & update math array
+//...update display/math values...
+function updateMathArray() {
+    //evaluate function
+    operate(mathValues[1], mathValues[0], mathValues[2]);
+    //display sum
+    displayProduct.textContent = sum;
+    //remove a & operator
+    mathValues.shift();
+    mathValues.shift();
+    //reset a = sum
+    mathValues[0] = sum;
 }
 
 // ---------------- //
@@ -264,7 +263,6 @@ buttonNums.forEach(button => button.addEventListener('click', () => {
 const buttonFuncts = document.querySelectorAll('.function');
 buttonFuncts.forEach(button => button.addEventListener('click', () => {
     if (displayProduct.textContent === 'error') {
-        console.log('enter if statement...')
         displayProduct.textContent = '';
     }
     logFuncts(button);
@@ -273,7 +271,6 @@ buttonFuncts.forEach(button => button.addEventListener('click', () => {
 //select `=`, run math operation...
 const buttonEquals = document.querySelector('.eq');
 buttonEquals.addEventListener('click', () => {
-    console.log(mathValues.length);
     if (mathValues.length === 0 || (mathValues.length === 2 && a === '')) {
         displayProduct.textContent = 'error';
     } else {
