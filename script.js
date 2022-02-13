@@ -33,7 +33,6 @@ themeButtons[1].addEventListener('click', () => {
 let sum;
 
 //...add
-//WORKING with whole nums (+/-) && decimals (+/-) && 2+ inputs
 function add(a, b) {
     let nums = [a, b];
     sum = nums.reduce((total, number) => {
@@ -43,8 +42,7 @@ function add(a, b) {
     return sum;
 }
 
-//...sub
-//WORKING with whole nums (+/-) && decimals (+/-) && 2+ inputs
+//...subtract
 function sub(a, b) {
     let nums = [a, b];
     sum = nums.reduce((total, number) => {
@@ -54,8 +52,7 @@ function sub(a, b) {
     return sum;
 }
 
-//...mult
-//WORKING with whole nums (+/-) && decimals (+/-) && 2+ inputs
+//...multiply
 function mult(a, b) {
     let nums = [a, b];
     sum = nums.reduce((total, number) => {
@@ -65,9 +62,7 @@ function mult(a, b) {
     return sum;
 }
 
-//...div
-//WORKING with whole nums (+/-) && decimals (+/-) && 2+ inputs && 'error' with 0 denominator
-//NOT WORKING with 0 denominator mid-array
+//...divide
 function div(a, b) {
     let nums = [a, b]
     sum = nums.reduce((total, number) => {
