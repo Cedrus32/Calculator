@@ -34,44 +34,25 @@ let sum;
 
 //...add
 function add(a, b) {
-    let nums = [a, b];
-    sum = nums.reduce((total, number) => {
-        return total += number;
-    });
-    nums = [sum];
+    sum = a + b;
     return sum;
 }
 
 //...subtract
 function sub(a, b) {
-    let nums = [a, b];
-    sum = nums.reduce((total, number) => {
-        return total -= number;
-    });
-    nums = [sum];
+    sum = a - b;
     return sum;
 }
 
 //...multiply
 function mult(a, b) {
-    let nums = [a, b];
-    sum = nums.reduce((total, number) => {
-        return total *= number;
-    });
-    nums = [sum];
+    sum = a * b;
     return sum;
 }
 
 //...divide
 function div(a, b) {
-    let nums = [a, b]
-    sum = nums.reduce((total, number) => {
-        if (number === 0) {
-            return 'error';
-        }
-        return total /= number;
-    });
-    nums = [sum];
+    sum = a / b;
     return sum;
 }
 
