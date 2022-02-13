@@ -254,23 +254,35 @@ buttonPosNeg.addEventListener('click', () => {
 //get & store number IDs --> send to display...
 const buttonNums = document.querySelectorAll('.num');
 buttonNums.forEach(button => button.addEventListener('click', () => {
+    if (displayProduct.textContent === 'error') {
+        displayProduct.textContent = '';
+    }
     logNums(button);
 }));
 
 //get & store function IDs --> send to display...
 const buttonFuncts = document.querySelectorAll('.function');
 buttonFuncts.forEach(button => button.addEventListener('click', () => {
+    if (displayProduct.textContent === 'error') {
+        console.log('enter if statement...')
+        displayProduct.textContent = '';
+    }
     logFuncts(button);
 }))
 
 //select `=`, run math operation...
 const buttonEquals = document.querySelector('.eq');
 buttonEquals.addEventListener('click', () => {
-    //add second value to math array
-    pushA2Arrays()
-    a = '';
-    //update math array...
-    updateMathArray();
-    //include '=' in math array
-    mathValues.push('=');
+    console.log(mathValues.length);
+    if (mathValues.length === 0 || (mathValues.length === 2 && a === '')) {
+        displayProduct.textContent = 'error';
+    } else {
+        //add second value to math array
+        pushA2Arrays()
+        a = '';
+        //update math array...
+        updateMathArray();
+        //include '=' in math array
+        mathValues.push('=');
+    }
 });
