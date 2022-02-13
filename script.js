@@ -87,6 +87,7 @@ function operate(operator, a, b) {
         case '%':
             cent(x, y);
     }
+
     return sum;
 }
 
@@ -97,6 +98,7 @@ function operate(operator, a, b) {
 
 //get display elements
 let a = '';
+let decOn = false;
 let mathValues = [];
 let displayValues = [];
 const displayFormula = document.querySelector('.formula');
@@ -110,6 +112,7 @@ function clearCalc() {
     mathValues = [];
     displayValues = [];
     sum = '';
+    decOn = false;
 }
 
 //delete number...
@@ -169,6 +172,11 @@ function scrubEqFunct() {
 
 //log functions...
 function logFuncts(button) {
+
+    // //TODO toggle decimal key on
+    if (decOn === true) {
+        decOn = false;
+    }
 
     //if `=` button was previously selected,
     //scrub math array, show sum on formula display
@@ -233,6 +241,7 @@ function updateMathArray() {
     mathValues.shift();
     //reset a = sum
     mathValues[0] = sum;
+    decOn = false;
 }
 
 // ---------------- //
@@ -274,6 +283,21 @@ buttonFuncts.forEach(button => button.addEventListener('click', () => {
     }
     logFuncts(button);
 }))
+
+//TODO toggle decimal key
+//work decimal key...
+const buttonDec = document.querySelector('.dec');
+buttonDec.addEventListener('click', () => {
+    //check in decimal previously selected
+    if (decOn === true) {
+        a += '';
+        displayFormula.textContent += '';
+    } else if (decOn === false) {
+        a += '.';
+        displayFormula.textContent += '.';
+    }
+    decOn = true;
+});
 
 //work math operations...
 const buttonEquals = document.querySelector('.eq');
