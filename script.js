@@ -212,6 +212,12 @@ function logFuncts(button) {
     }
 }
 
+//delete number...
+function deleteNum() {
+    a = a.slice(0, -1);
+    displayFormula.textContent = displayValues.join(' ') + ' ' + a;
+}
+
 //log numbers...
 function logNums(button) {
     //if entering a number after getting sum
@@ -231,6 +237,12 @@ function logNums(button) {
 const buttonClear = document.querySelector('#clear');
 buttonClear.addEventListener('click', () => {
     clearCalc();
+});
+
+//delete
+const buttonDel = document.querySelector('#del');
+buttonDel.addEventListener('click', () => {
+    deleteNum();
 });
 
 //toggle positive/negative
