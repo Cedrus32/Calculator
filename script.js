@@ -56,6 +56,12 @@ function div(a, b) {
     return sum;
 }
 
+//square root...
+function sqrt(a, b) {
+    sum = a ** (1/b);
+    return sum;
+}
+
 //...math switch...
 function operate(operator, a, b) {
     let x = Number(a);
@@ -125,8 +131,6 @@ function scrubEqNeg() {
 
 //toggle positive/negative value...
 function toggleNeg() {
-    console.log({mathValues});
-    console.log({displayValues});
     if (mathValues[1] === '=') {
         scrubEqNeg();
         displayFormula.textContent = mathValues[0];
