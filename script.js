@@ -52,7 +52,11 @@ function mult(a, b) {
 
 //...divide
 function div(a, b) {
-    sum = a / b;
+    if (b === 0) {
+        sum = 'error';
+    } else {
+        sum = a / b;
+    }
     return sum;
 }
 
@@ -85,7 +89,6 @@ function operate(operator, a, b) {
         case '/':
             div(x, y);
             break;
-        //TODO
         case '√':
             sqrt(x, y);
             break;
@@ -94,10 +97,13 @@ function operate(operator, a, b) {
             cent(x, y);
     }
 
-    //round sum
-    sum = roundSum(sum);
-
-    return sum;
+    if (sum === 'error') {
+        return sum;
+    } else {
+        //round sum
+        sum = roundSum(sum);
+        return sum;
+    }
 }
 
 
