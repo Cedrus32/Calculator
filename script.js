@@ -136,16 +136,35 @@ function deleteNum() {
     displayFormula.textContent = displayValues.join(' ') + ' ' + a;
 }
 
+//scrub `=` when selecting [+/-]...
+function scrubEqNeg() {
+    //remove `=` from math array
+    mathValues.pop();
+    //make math value negative
+    mathValues[0] *= -1;
+    //update display array to math array (negative value)
+    displayValues.splice(1);
+    displayValues[0] = mathValues[0];
+}
+
 //toggle positive/negative value...
 function toggleNeg() {
-    if (a === '') {
-        a = '-'
-    } else if (a === '-') {
-        a = '';
-    } else if (a !== '' && a !== '-') {
-        a *= -1;
+    console.log({mathValues});
+    console.log({displayValues});
+    if (mathValues[1] === '=') {
+        scrubEqNeg();
+        displayFormula.textContent = mathValues[0];
+        displayProduct.textContent = '';
+    } else {
+        if (a === '') {
+            a = '-'
+        } else if (a === '-') {
+            a = '';
+        } else if (a !== '' && a !== '-') {
+            a *= -1;
+        }
+        displayFormula.textContent = displayValues.join(' ') + ' ' + a;
     }
-    displayFormula.textContent = displayValues.join(' ') + ' ' + a;
 }
 
 //log numbers...
@@ -159,8 +178,8 @@ function logNums(button) {
     displayFormula.textContent += button.id;
 }
 
-//scrub 'equals' check...
-function scrubEqCheck() {
+//scrub 'equals' when selecting another function...
+function scrubEqFunct() {
     //remove '=' from math array
     mathValues.pop();
     //update display array to math array (sum)
@@ -174,7 +193,7 @@ function logFuncts(button) {
     //if `=` button was previously selected,
     //scrub math array, show sum on formula display
     if (mathValues[1] === '=') {
-        scrubEqCheck();
+        scrubEqFunct();
         displayFormula.textContent = sum;
         displayProduct.textContent = '';
     }
