@@ -227,18 +227,6 @@ function logNums(button) {
 // BUTTON LISTENERS //
 // ---------------- //
 
-//run math operation...
-const buttonEquals = document.querySelector('.eq');
-buttonEquals.addEventListener('click', () => {
-    //add second value to math array
-    pushA2Arrays()
-    a = '';
-    //update math array...
-    updateMathArray();
-    //include '=' in math array
-    mathValues.push('=');
-});
-
 //clear display & displayValues
 const buttonClear = document.querySelector('#clear');
 buttonClear.addEventListener('click', () => {
@@ -262,3 +250,15 @@ const buttonFuncts = document.querySelectorAll('.function');
 buttonFuncts.forEach(button => button.addEventListener('click', () => {
     logFuncts(button);
 }))
+
+//select `=`, run math operation...
+const buttonEquals = document.querySelector('.eq');
+buttonEquals.addEventListener('click', () => {
+    //add second value to math array
+    pushA2Arrays()
+    a = '';
+    //update math array...
+    updateMathArray();
+    //include '=' in math array
+    mathValues.push('=');
+});
