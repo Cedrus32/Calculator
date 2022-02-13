@@ -182,7 +182,6 @@ function scrubEqFunct() {
 //log functions...
 function logFuncts(button) {
 
-    // //TODO toggle decimal key on
     if (decOn === true) {
         decOn = false;
     }
@@ -218,6 +217,25 @@ function logFuncts(button) {
     if (mathValues.length > 3) {
         updateMathArray();
     }
+}
+
+//log decimal key
+function logDec() {
+    if (mathValues[1] === '=') {
+        clearCalc();
+        a += '0.';
+        displayFormula.textContent += '0.';
+    } else {
+        //check in decimal previously selected
+        if (decOn === true) {
+            a += '';
+            displayFormula.textContent += '';
+        } else if (decOn === false) {
+            a += '.';
+            displayFormula.textContent += '.';
+        }
+    }
+    decOn = true;
 }
 
 //push a to both arrays...
@@ -293,19 +311,10 @@ buttonFuncts.forEach(button => button.addEventListener('click', () => {
     logFuncts(button);
 }))
 
-//TODO toggle decimal key
 //work decimal key...
 const buttonDec = document.querySelector('.dec');
 buttonDec.addEventListener('click', () => {
-    //check in decimal previously selected
-    if (decOn === true) {
-        a += '';
-        displayFormula.textContent += '';
-    } else if (decOn === false) {
-        a += '.';
-        displayFormula.textContent += '.';
-    }
-    decOn = true;
+    logDec();
 });
 
 //work math operations...
