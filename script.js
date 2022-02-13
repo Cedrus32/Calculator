@@ -62,6 +62,12 @@ function sqrt(a, b) {
     return sum;
 }
 
+//round sum
+function roundSum(sum) {
+    newSum = Math.round(sum * 100) / 100;
+    return newSum;
+}
+
 //...math switch...
 function operate(operator, a, b) {
     let x = Number(a);
@@ -87,6 +93,9 @@ function operate(operator, a, b) {
         case '%':
             cent(x, y);
     }
+
+    //round sum
+    sum = roundSum(sum);
 
     return sum;
 }
