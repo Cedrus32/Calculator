@@ -32,6 +32,33 @@ themeButtons[1].addEventListener('click', () => {
 
 let sum;
 
+//find percent...
+function findpercent(a, b) {
+    console.log('enter findPercent');
+    sum = (a / b) * 100;
+    return sum;
+}
+
+//todo set up percent switch
+//...percent switch...
+function operateCent(operator, a, b) {
+    console.log('enter operateCent');
+    let x = Number(a);
+    let y = Number(b);
+    let op = operator;
+    console.log({x});
+    console.log({y});
+    console.log({op});
+    switch(operator) {
+        case '/':
+            findpercent(a, b);
+    }
+
+    //round sum
+    sum = roundSum(sum);
+    return sum;
+}
+
 //...add
 function add(a, b) {
     sum = a + b;
@@ -73,9 +100,10 @@ function roundSum(sum) {
 }
 
 //...math switch...
-function operate(operator, a, b) {
+function operateFunct(operator, a, b) {
     let x = Number(a);
-    let y = Number(b)
+    let y = Number(b);
+    let op = operator
     switch (operator) {
         case '+':
             add(x, y);
@@ -92,9 +120,6 @@ function operate(operator, a, b) {
         case '√':
             sqrt(x, y);
             break;
-        //TODO
-        case '%':
-            cent(x, y);
     }
 
     if (sum === 'error') {
@@ -221,7 +246,7 @@ function logFuncts(button) {
     //when operating multiple numbers w/out hitting `=`
     //replace math array [0]/[1] with sum...
     if (mathValues.length > 3) {
-        updateMathArray();
+        updateMathArrayFunct();
     }
 }
 
@@ -263,10 +288,25 @@ function replaceOperators() {
     displayFormula.textContent = displayValues.join(' ');
 }
 
-//update display/math values...
-function updateMathArray() {
+//TODO set up percent switch
+//update display/math values when percent is selected...
+function updateMathArrayCent() {
+    //evaluate percent
+    operateCent(mathValues[1], mathValues[0], mathValues[2]);
+    //display sum
+    displayProduct.textContent = sum;
+    //remove a & operator
+    mathValues.shift();
+    mathValues.shift();
+    //reset a = sum
+    mathValues[0] = sum;
+    decOn = false;
+}
+
+//update display/math values when function in selected...
+function updateMathArrayFunct() {
     //evaluate function
-    operate(mathValues[1], mathValues[0], mathValues[2]);
+    operateFunct(mathValues[1], mathValues[0], mathValues[2]);
     //display sum
     displayProduct.textContent = sum;
     //remove a & operator
@@ -299,6 +339,19 @@ buttonPosNeg.addEventListener('click', () => {
     toggleNeg();
 });
 
+//TODO set up percentage button
+//work percentage key...
+const buttonCent = document.querySelector('#cent');
+console.log(buttonCent);
+buttonCent.addEventListener('click', () => {
+    //save a to both arrays
+    pushA2Arrays()
+    //evaluate percentage, update math array
+    updateMathArrayCent();
+    //include '=' in math array
+    mathValues.push('=');
+});
+
 //work number keys...
 const buttonNums = document.querySelectorAll('.num');
 buttonNums.forEach(button => button.addEventListener('click', () => {
@@ -329,11 +382,11 @@ buttonEquals.addEventListener('click', () => {
     if (mathValues.length === 0 || (mathValues.length === 2 && a === '')) {
         displayProduct.textContent = 'error';
     } else {
-        //add second value to math array
+        //add second value to both arrays
         pushA2Arrays()
         a = '';
-        //update math array...
-        updateMathArray();
+        //evaluate function, update math array...
+        updateMathArrayFunct();
         //include '=' in math array
         mathValues.push('=');
     }
