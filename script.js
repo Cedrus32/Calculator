@@ -298,21 +298,8 @@ function logPercent() {
 //log numbers...
 function logNums(button) {
 
-    //** WORKING **/
-    //if previous result produced 'error', clean current display
-    if (displayProduct.textContent === 'error') {
-        displayProduct.textContent = '';
-        console.log({mathValues});
-        console.log({displayValues});
-        console.log({a});
-        console.log({sum});
-
-        //** works because mathValues[1] === '=', which clears calculator vvv **/
-    }
-    //** ------- **/
-
     //if entering a number after getting sum
-    if (mathValues[1] === '=') {
+    if (mathValues[1] === '=' || displayProduct.textContent === 'error') {
         clearCalc();
     }
 
@@ -327,7 +314,6 @@ function logFuncts(button) {
     if ((mathValues.length === 0 && a === '') || displayProduct.textContent === 'error' ) {
         displayProduct.textContent = 'error';
     } else {
-
         //reset decOn
         if (decOn === true) {
             decOn = false;
@@ -362,7 +348,7 @@ function logFuncts(button) {
             if (mathValues.length === 3) {
                 shiftArrays();
             }
-            
+
             //when operating multiple numbers w/out hitting `=`
             //replace math array [0]/[1] with sum...
             if (mathValues.length > 3) {
