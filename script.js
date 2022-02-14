@@ -281,13 +281,18 @@ function toggleNeg() {
 
 //log percent based on preceding math function...
 function logPercent() {
-    //save a to both arrays
-    pushA2Arrays()
-    a = '';
-    //evaluate percentage, update math array
-    updateMathArrayCent();
-    //include '=' in math array
-    mathValues.push('=');
+    if (mathValues.length === 0) {
+        displayFormula.textContent = '';
+        displayProduct.textContent = 'error';
+    } else {
+        //save a to both arrays
+        pushA2Arrays()
+        a = '';
+        //evaluate percentage, update math array
+        updateMathArrayCent();
+        //include '=' in math array
+        mathValues.push('=');
+    }
 }
 
 //log numbers...
@@ -321,7 +326,7 @@ function logFuncts(button) {
 
     //TODO stop logging function key if sum === 0
     
-    if (mathValues.length === 0) {
+    if (mathValues.length === 0 && a === '') {
         displayFormula.textContent = '';
         displayProduct.textContent = 'error';
     } else {
