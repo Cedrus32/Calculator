@@ -310,7 +310,7 @@ function logFuncts(button) {
         decOn = false;
     }
 
-    //todo consider entering a function if a === ''
+    //todo consider selecting funct button when a === ''
     //if previous result produced 'error', clean display
     if (displayProduct.textContent === 'error') {
         console.log({mathValues});
@@ -403,13 +403,13 @@ buttonDel.addEventListener('click', () => {
 });
 
 //positive/negative button
-const buttonPosNeg = document.querySelector('#pos-neg');
+const buttonPosNeg = document.querySelector('.pos-neg');
 buttonPosNeg.addEventListener('click', () => {
     toggleNeg();
 });
 
 //percent button
-const buttonCent = document.querySelector('#cent');
+const buttonCent = document.querySelector('.cent');
 buttonCent.addEventListener('click', () => {
     logPercent();
 });
@@ -443,7 +443,12 @@ buttonEquals.addEventListener('click', () => {
 // KEY LISTENER //
 // ------------ //
 
-//
+// // initiate key function
+// function initKey(key) {
+//     switch(key) {
+//         case ''
+//     }
+// }
 
 //get key value and matching element
 function getKey(key) {
