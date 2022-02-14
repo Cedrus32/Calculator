@@ -57,13 +57,9 @@ function markDown(a, b) {
 
 //...percent switch...
 function operateCent(operator, a, b) {
-    console.log('enter operateCent');
     let x = Number(a);
     let y = Number(b);
     let op = operator;
-    console.log({x});
-    console.log({y});
-    console.log({op});
     switch(operator) {
         case '/':
             findPercent(a, b);
@@ -364,7 +360,6 @@ buttonPosNeg.addEventListener('click', () => {
 
 //work percentage key...
 const buttonCent = document.querySelector('#cent');
-console.log(buttonCent);
 buttonCent.addEventListener('click', () => {
     //save a to both arrays
     pushA2Arrays()
