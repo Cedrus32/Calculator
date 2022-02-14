@@ -21,7 +21,6 @@ const themeButtons = document.querySelectorAll('.theme');
 themeButtons[0].addEventListener('click', () => {
     switchTheme('./light.css');
 });
-
 //switch to dark theme...
 themeButtons[1].addEventListener('click', () => {
     switchTheme('./dark.css');
@@ -59,9 +58,9 @@ function markDown(a, b) {
 
 //...percent switch...
 function operateCent(operator, a, b) {
-    let x = Number(a);
-    let y = Number(b);
-    let op = operator;
+    // let x = Number(a);
+    // let y = Number(b);
+    // let op = operator;
     switch(operator) {
         case '/':
             findPercent(a, b);
@@ -73,7 +72,7 @@ function operateCent(operator, a, b) {
             markUp(a, b);
             break;
         case '-':
-        markDown(a, b);
+            markDown(a, b);
     }
 
     //round sum
@@ -154,9 +153,9 @@ function operateFunct(operator, a, b) {
 }
 
 
-// ----------------- //
-// KEY FUNCTIONALITY //
-// ----------------- //
+// -------------------- //
+// CALCULATOR FUNCTIONS //
+// -------------------- //
 
 //get display elements
 let a = '';
@@ -165,6 +164,79 @@ let mathValues = [];
 let displayValues = [];
 const displayFormula = document.querySelector('.formula');
 const displayProduct = document.querySelector('.product');
+
+//scrub `=` when selecting [+/-]...
+function scrubEqNeg() {
+    //remove `=` from math array
+    mathValues.pop();
+    //make math value negative
+    mathValues[0] *= -1;
+    //update display array to math array (negative value)
+    displayValues.splice(1);
+    displayValues[0] = mathValues[0];
+}
+
+//scrub 'equals' when selecting another function...
+function scrubEqFunct() {
+    //remove '=' from math array
+    mathValues.pop();
+    //update display array to math array (sum)
+    displayValues.splice(1);
+    displayValues[0] = mathValues[0];
+}
+
+//push a to both arrays...
+function pushA2Arrays() {
+    a = Number(a);
+    mathValues.push(a);
+    displayValues.push(a);
+}
+
+//replace operators...
+function replaceOperators() {
+    //replace/remove functions (operatorValues)
+    mathValues[1] = mathValues[2];
+    mathValues.pop();
+    //replace/remove functions (displayValues)
+    displayValues[1] = displayValues[2];
+    displayValues.pop();
+    //update display
+    displayFormula.textContent = displayValues.join(' ');
+}
+
+//update display/math values when percent is selected...
+function updateMathArrayCent() {
+    //evaluate percent
+    operateCent(mathValues[1], mathValues[0], mathValues[2]);
+    //display sum
+    displayProduct.textContent = sum;
+    //remove a & operator
+    mathValues.shift();
+    mathValues.shift();
+    //reset a = sum
+    mathValues[0] = sum;
+    decOn = false;
+}
+
+//update display/math values when function in selected...
+function updateMathArrayFunct() {
+    //evaluate function
+    operateFunct(mathValues[1], mathValues[0], mathValues[2]);
+    //display sum
+    displayProduct.textContent = sum;
+    //remove a & operator
+    mathValues.shift();
+    mathValues.shift();
+    //reset a = sum
+    mathValues[0] = sum;
+    decOn = false;
+}
+
+// ------------- //
+// KEY FUNCTIONS //
+// ------------- //
+
+//TODO wrap multi-step button-listeners into single functions to call from buttons or keys
 
 //clear calculator...
 function clearCalc() {
@@ -181,17 +253,6 @@ function clearCalc() {
 function deleteNum() {
     a = a.slice(0, -1);
     displayFormula.textContent = displayValues.join(' ') + ' ' + a;
-}
-
-//scrub `=` when selecting [+/-]...
-function scrubEqNeg() {
-    //remove `=` from math array
-    mathValues.pop();
-    //make math value negative
-    mathValues[0] *= -1;
-    //update display array to math array (negative value)
-    displayValues.splice(1);
-    displayValues[0] = mathValues[0];
 }
 
 //toggle positive/negative value...
@@ -212,31 +273,49 @@ function toggleNeg() {
     }
 }
 
+//log percent based on preceding math function...
+function logPercent() {
+    //save a to both arrays
+    pushA2Arrays()
+    a = '';
+    //evaluate percentage, update math array
+    updateMathArrayCent();
+    //include '=' in math array
+    mathValues.push('=');
+}
+
 //log numbers...
 function logNums(button) {
+
+    //if previous result produced 'error', clean current display
+    if (displayProduct.textContent === 'error') {
+        displayProduct.textContent = '';
+    }
+
     //if entering a number after getting sum
     if (mathValues[1] === '=') {
         clearCalc();
     }
+
     //concat a, update displayFormula
     a += button.id;
     displayFormula.textContent += button.id;
 }
 
-//scrub 'equals' when selecting another function...
-function scrubEqFunct() {
-    //remove '=' from math array
-    mathValues.pop();
-    //update display array to math array (sum)
-    displayValues.splice(1);
-    displayValues[0] = mathValues[0];
-}
-
 //log functions...
 function logFuncts(button) {
 
+    //reset decOn
     if (decOn === true) {
         decOn = false;
+    }
+
+    //todo consider entering a function if a === ''
+    //if previous result produced 'error', clean display
+    if (displayProduct.textContent === 'error') {
+        console.log({mathValues});
+        console.log({displayValues});
+        displayProduct.textContent = '';
     }
 
     //if `=` button was previously selected,
@@ -292,122 +371,8 @@ function logDec() {
     decOn = true;
 }
 
-//push a to both arrays...
-function pushA2Arrays() {
-    a = Number(a);
-    mathValues.push(a);
-    displayValues.push(a);
-}
-
-//replace operators...
-function replaceOperators() {
-    //replace/remove functions (operatorValues)
-    mathValues[1] = mathValues[2];
-    mathValues.pop();
-    //replace/remove functions (displayValues)
-    displayValues[1] = displayValues[2];
-    displayValues.pop();
-    //update display
-    displayFormula.textContent = displayValues.join(' ');
-}
-
-//update display/math values when percent is selected...
-function updateMathArrayCent() {
-    //evaluate percent
-    operateCent(mathValues[1], mathValues[0], mathValues[2]);
-    //display sum
-    displayProduct.textContent = sum;
-    //remove a & operator
-    mathValues.shift();
-    mathValues.shift();
-    //reset a = sum
-    mathValues[0] = sum;
-    decOn = false;
-}
-
-//update display/math values when function in selected...
-function updateMathArrayFunct() {
-    //evaluate function
-    operateFunct(mathValues[1], mathValues[0], mathValues[2]);
-    //display sum
-    displayProduct.textContent = sum;
-    //remove a & operator
-    mathValues.shift();
-    mathValues.shift();
-    //reset a = sum
-    mathValues[0] = sum;
-    decOn = false;
-}
-
-
-// ------------------ //
-// LISTENER FUNCTIONS //
-// ------------------ //
-
-
-
-
-// ---------------- //
-// BUTTON LISTENERS //
-// ---------------- //
-
-//clear display & displayValues
-const buttonClear = document.querySelector('#clear');
-buttonClear.addEventListener('click', () => {
-    clearCalc();
-});
-
-//delete
-const buttonDel = document.querySelector('#del');
-buttonDel.addEventListener('click', () => {
-    deleteNum();
-});
-
-//toggle positive/negative
-const buttonPosNeg = document.querySelector('#pos-neg');
-buttonPosNeg.addEventListener('click', () => {
-    toggleNeg();
-});
-
-//work percentage key...
-const buttonCent = document.querySelector('#cent');
-buttonCent.addEventListener('click', () => {
-    //save a to both arrays
-    pushA2Arrays()
-    a = '';
-    //evaluate percentage, update math array
-    updateMathArrayCent();
-    //include '=' in math array
-    mathValues.push('=');
-});
-
-//work number keys...
-const buttonNums = document.querySelectorAll('.num');
-buttonNums.forEach(button => button.addEventListener('click', () => {
-    if (displayProduct.textContent === 'error') {
-        displayProduct.textContent = '';
-    }
-    logNums(button);
-}));
-
-//work function keys..
-const buttonFuncts = document.querySelectorAll('.function');
-buttonFuncts.forEach(button => button.addEventListener('click', () => {
-    if (displayProduct.textContent === 'error') {
-        displayProduct.textContent = '';
-    }
-    logFuncts(button);
-}))
-
-//work decimal key...
-const buttonDec = document.querySelector('.dec');
-buttonDec.addEventListener('click', () => {
-    logDec();
-});
-
-//work math operations...
-const buttonEquals = document.querySelector('.eq');
-buttonEquals.addEventListener('click', () => {
+//run equals...
+function runEquals() {
     if (mathValues.length === 0 || (mathValues.length === 2 && a === '')) {
         displayProduct.textContent = 'error';
     } else {
@@ -419,9 +384,73 @@ buttonEquals.addEventListener('click', () => {
         //include '=' in math array
         mathValues.push('=');
     }
+}
+
+// ---------------- //
+// BUTTON LISTENERS //
+// ---------------- //
+
+//clear button
+const buttonClear = document.querySelector('#clear');
+buttonClear.addEventListener('click', () => {
+    clearCalc();
 });
 
-// ------------- //
-// KEY LISTENERS //
-// ------------- //
+//delete button
+const buttonDel = document.querySelector('#del');
+buttonDel.addEventListener('click', () => {
+    deleteNum();
+});
 
+//positive/negative button
+const buttonPosNeg = document.querySelector('#pos-neg');
+buttonPosNeg.addEventListener('click', () => {
+    toggleNeg();
+});
+
+//percent button
+const buttonCent = document.querySelector('#cent');
+buttonCent.addEventListener('click', () => {
+    logPercent();
+});
+
+//number buttons
+const buttonNums = document.querySelectorAll('.num');
+buttonNums.forEach(button => button.addEventListener('click', () => {
+    logNums(button);
+}));
+
+//function buttons
+const buttonFuncts = document.querySelectorAll('.function');
+buttonFuncts.forEach(button => button.addEventListener('click', () => {
+    logFuncts(button);
+}))
+
+//decimal button
+const buttonDec = document.querySelector('.dec');
+buttonDec.addEventListener('click', () => {
+    logDec();
+});
+
+//equal button
+const buttonEquals = document.querySelector('.eq');
+buttonEquals.addEventListener('click', () => {
+    runEquals();
+});
+
+
+// ------------ //
+// KEY LISTENER //
+// ------------ //
+
+//
+
+//get key value and matching element
+function getKey(key) {
+    let keyValue = key.key;
+    const keyLogged = document.querySelector(`.key[data-key='${keyValue}']`);
+    initKey(keyLogged);
+}
+
+//listen for keydown...
+window.addEventListener('keydown', getKey);
