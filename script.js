@@ -2,6 +2,8 @@
 // THEMES //
 // ------ //
 
+//TODO -- add different coloring to [+/-] [%] [√] (not keyboard enabled)
+
 //TODO for finished, light is default
 //TODO for testing, dark is default...
 //TODO .html --> <link ... light.css>
