@@ -323,13 +323,11 @@ function logNums(button) {
 
 //log functions...
 function logFuncts(button) {
-
-    //TODO stop logging function key if sum === 0
     
-    if (mathValues.length === 0 && a === '') {
-        displayFormula.textContent = '';
+    if ((mathValues.length === 0 && a === '') || displayProduct.textContent === 'error' ) {
         displayProduct.textContent = 'error';
     } else {
+
         //reset decOn
         if (decOn === true) {
             decOn = false;
@@ -347,22 +345,29 @@ function logFuncts(button) {
         if (a !== '') {
             pushA2Arrays()
         }
-        //add FUNCTION to arrays
-        pushFunct2Arrays(button);
-        //update display
-        displayFormula.textContent = displayValues.join(' ');
-        displayFormula.textContent += ' ';
-        a = '';
 
-        //if 2 functions selected sequentially
-        //replace original function with second function (both arrays)
-        if (mathValues.length === 3) {
-            shiftArrays();
-        }
-        //when operating multiple numbers w/out hitting `=`
-        //replace math array [0]/[1] with sum...
-        if (mathValues.length > 3) {
-            updateMathArrayFunct();
+        if (displayValues[2] === 0) {
+            displayValues.pop();
+            displayProduct.textContent = 'error';
+        } else {
+            //add FUNCTION to arrays
+            pushFunct2Arrays(button);
+            //update display
+            displayFormula.textContent = displayValues.join(' ');
+            displayFormula.textContent += ' ';
+            a = '';
+
+            //if 2 functions selected sequentially
+            //replace original function with second function (both arrays)
+            if (mathValues.length === 3) {
+                shiftArrays();
+            }
+            
+            //when operating multiple numbers w/out hitting `=`
+            //replace math array [0]/[1] with sum...
+            if (mathValues.length > 3) {
+                updateMathArrayFunct();
+            }
         }
     }
 }
