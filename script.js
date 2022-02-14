@@ -227,7 +227,7 @@ function scrubEqFunct() {
     mathValues.pop();
     //update display array to math array (sum)
     displayValues.splice(1);
-    displayValues[0] = sum;
+    displayValues[0] = mathValues[0];
 }
 
 //log functions...
@@ -241,9 +241,10 @@ function logFuncts(button) {
     //scrub math array, show sum on formula display
     if (mathValues[1] === '=') {
         scrubEqFunct();
-        displayFormula.textContent = sum;
+        displayFormula.textContent = displayValues;
         displayProduct.textContent = '';
     }
+
     //if a !== null, add a to arrays
     if (a !== '') {
         pushA2Arrays()
@@ -363,6 +364,7 @@ const buttonCent = document.querySelector('#cent');
 buttonCent.addEventListener('click', () => {
     //save a to both arrays
     pushA2Arrays()
+    a = '';
     //evaluate percentage, update math array
     updateMathArrayCent();
     //include '=' in math array
