@@ -154,9 +154,9 @@ function operateFunct(operator, a, b) {
 }
 
 
-// ------------------------ //
-// CALCULATOR FUNCTIONALITY //
-// ------------------------ //
+// ----------------- //
+// KEY FUNCTIONALITY //
+// ----------------- //
 
 //get display elements
 let a = '';
@@ -339,6 +339,14 @@ function updateMathArrayFunct() {
     decOn = false;
 }
 
+
+// ------------------ //
+// LISTENER FUNCTIONS //
+// ------------------ //
+
+
+
+
 // ---------------- //
 // BUTTON LISTENERS //
 // ---------------- //
@@ -412,3 +420,8 @@ buttonEquals.addEventListener('click', () => {
         mathValues.push('=');
     }
 });
+
+// ------------- //
+// KEY LISTENERS //
+// ------------- //
+
