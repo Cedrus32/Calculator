@@ -192,8 +192,14 @@ function pushA2Arrays() {
     displayValues.push(a);
 }
 
+//push function to both arrays...
+function pushFunct2Arrays(button) {
+    mathValues.push(button.id);
+    displayValues.push(button.id);
+}
+
 //replace operators...
-function replaceOperators() {
+function shiftArrays() {
     //replace/remove functions (operatorValues)
     mathValues[1] = mathValues[2];
     mathValues.pop();
@@ -287,10 +293,18 @@ function logPercent() {
 //log numbers...
 function logNums(button) {
 
+    //** WORKING **/
     //if previous result produced 'error', clean current display
     if (displayProduct.textContent === 'error') {
         displayProduct.textContent = '';
+        console.log({mathValues});
+        console.log({displayValues});
+        console.log({a});
+        console.log({sum});
+
+        //** works because mathValues[1] === '=', which clears calculator vvv **/
     }
+    //** ------- **/
 
     //if entering a number after getting sum
     if (mathValues[1] === '=') {
@@ -305,50 +319,46 @@ function logNums(button) {
 //log functions...
 function logFuncts(button) {
 
-    //reset decOn
-    if (decOn === true) {
-        decOn = false;
-    }
+    //TODO stop logging function key if sum === 0
+    
+    if (mathValues.length === 0) {
+        displayFormula.textContent = '';
+        displayProduct.textContent = 'error';
+    } else {
+        //reset decOn
+        if (decOn === true) {
+            decOn = false;
+        }
 
-    //todo consider selecting funct button when a === ''
-    //if previous result produced 'error', clean display
-    if (displayProduct.textContent === 'error') {
-        console.log({mathValues});
-        console.log({displayValues});
-        displayProduct.textContent = '';
-    }
+        //if `=` button was previously selected,
+        //scrub math array, show sum on formula display
+        if (mathValues[1] === '=') {
+            scrubEqFunct();
+            displayFormula.textContent = displayValues;
+            displayProduct.textContent = '';
+        }
 
-    //if `=` button was previously selected,
-    //scrub math array, show sum on formula display
-    if (mathValues[1] === '=') {
-        scrubEqFunct();
-        displayFormula.textContent = displayValues;
-        displayProduct.textContent = '';
-    }
+        //if a !== null, add A to arrays
+        if (a !== '') {
+            pushA2Arrays()
+        }
+        //add FUNCTION to arrays
+        pushFunct2Arrays(button);
+        //update display
+        displayFormula.textContent = displayValues.join(' ');
+        displayFormula.textContent += ' ';
+        a = '';
 
-    //if a !== null, add a to arrays
-    if (a !== '') {
-        pushA2Arrays()
-    }
-
-    //add function to arrays
-    mathValues.push(button.id);
-    displayValues.push(button.id);
-    //update display
-    displayFormula.textContent = displayValues.join(' ');
-    displayFormula.textContent += ' ';
-    a = '';
-
-    //if 2 functions selected sequentially
-    //replace original function with second function (both arrays)
-    if (mathValues.length === 3) {
-        replaceOperators();
-    }
-
-    //when operating multiple numbers w/out hitting `=`
-    //replace math array [0]/[1] with sum...
-    if (mathValues.length > 3) {
-        updateMathArrayFunct();
+        //if 2 functions selected sequentially
+        //replace original function with second function (both arrays)
+        if (mathValues.length === 3) {
+            shiftArrays();
+        }
+        //when operating multiple numbers w/out hitting `=`
+        //replace math array [0]/[1] with sum...
+        if (mathValues.length > 3) {
+            updateMathArrayFunct();
+        }
     }
 }
 
@@ -439,9 +449,9 @@ buttonEquals.addEventListener('click', () => {
 });
 
 
-// ------------ //
-// KEY LISTENER //
-// ------------ //
+// // ------------ //
+// // KEY LISTENER //
+// // ------------ //
 
 // // initiate key function
 // function initKey(key) {
@@ -450,12 +460,12 @@ buttonEquals.addEventListener('click', () => {
 //     }
 // }
 
-//get key value and matching element
-function getKey(key) {
-    let keyValue = key.key;
-    const keyLogged = document.querySelector(`.key[data-key='${keyValue}']`);
-    initKey(keyLogged);
-}
+// //get key value and matching element
+// function getKey(key) {
+//     let keyValue = key.key;
+//     const keyLogged = document.querySelector(`.key[data-key='${keyValue}']`);
+//     initKey(keyLogged);
+// }
 
-//listen for keydown...
-window.addEventListener('keydown', getKey);
+// //listen for keydown...
+// window.addEventListener('keydown', getKey);
