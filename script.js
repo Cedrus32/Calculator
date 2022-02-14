@@ -33,13 +33,28 @@ themeButtons[1].addEventListener('click', () => {
 let sum;
 
 //find percent...
-function findpercent(a, b) {
-    console.log('enter findPercent');
+function findPercent(a, b) {
     sum = (a / b) * 100;
     return sum;
 }
 
-//todo set up percent switch
+//find percent of...
+function findPercentOf(a, b) {
+    sum = b * (a / 100);
+    return sum;
+}
+
+//mark up...
+function markUp(a, b) {
+    sum = a * (1 + (b / 100));
+    return sum;
+}
+
+function markDown(a, b) {
+    sum = a * (1 - (b / 100));
+    return sum;
+}
+
 //...percent switch...
 function operateCent(operator, a, b) {
     console.log('enter operateCent');
@@ -51,7 +66,16 @@ function operateCent(operator, a, b) {
     console.log({op});
     switch(operator) {
         case '/':
-            findpercent(a, b);
+            findPercent(a, b);
+            break;
+        case 'x':
+            findPercentOf(a, b);
+            break;
+        case '+':
+            markUp(a, b);
+            break;
+        case '-':
+        markDown(a, b);
     }
 
     //round sum
@@ -288,7 +312,6 @@ function replaceOperators() {
     displayFormula.textContent = displayValues.join(' ');
 }
 
-//TODO set up percent switch
 //update display/math values when percent is selected...
 function updateMathArrayCent() {
     //evaluate percent
@@ -339,7 +362,6 @@ buttonPosNeg.addEventListener('click', () => {
     toggleNeg();
 });
 
-//TODO set up percentage button
 //work percentage key...
 const buttonCent = document.querySelector('#cent');
 console.log(buttonCent);
