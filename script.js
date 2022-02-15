@@ -33,11 +33,18 @@ themeButtons[1].addEventListener('click', () => {
 
 let sum;
 
+//** ---------- */
 //find percent...
 function findPercent(a, b) {
-    sum = (a / b) * 100;
+    if (b === 0) {
+        sum = 'error';
+    } else {
+        sum = (a / b) * 100;
+    }
+    console.log('END OF findPercent()');
+    console.log({sum});
     return sum;
-}
+} //** ---------- */
 
 //find percent of...
 function findPercentOf(a, b) {
@@ -58,9 +65,6 @@ function markDown(a, b) {
 
 //...percent switch...
 function operateCent(operator, a, b) {
-    // let x = Number(a);
-    // let y = Number(b);
-    // let op = operator;
     switch(operator) {
         case '/':
             findPercent(a, b);
@@ -75,9 +79,13 @@ function operateCent(operator, a, b) {
             markDown(a, b);
     }
 
-    //round sum
-    sum = roundSum(sum);
-    return sum;
+    if (sum === 'error') {
+        return sum;
+    } else {
+        //round sum
+        sum = roundSum(sum);
+        return sum;
+    }
 }
 
 //...add
@@ -114,32 +122,23 @@ function sqrt(a, b) {
     return sum;
 }
 
-//round sum
-function roundSum(sum) {
-    newSum = Math.round(sum * 100) / 100;
-    return newSum;
-}
-
 //...math switch...
 function operateFunct(operator, a, b) {
-    let x = Number(a);
-    let y = Number(b);
-    let op = operator
     switch (operator) {
         case '+':
-            add(x, y);
+            add(a, b);
             break;
         case '-':
-            sub(x, y);
+            sub(a, b);
             break;
         case 'x':
-            mult(x, y);
+            mult(a, b);
             break;
         case '/':
-            div(x, y);
+            div(a, b);
             break;
         case '√':
-            sqrt(x, y);
+            sqrt(a, b);
             break;
     }
 
@@ -150,6 +149,12 @@ function operateFunct(operator, a, b) {
         sum = roundSum(sum);
         return sum;
     }
+}
+
+//round sum
+function roundSum(sum) {
+    newSum = Math.round(sum * 100) / 100;
+    return newSum;
 }
 
 
@@ -210,11 +215,16 @@ function shiftArrays() {
     displayFormula.textContent = displayValues.join(' ');
 }
 
+//** ---------- */
 //update display/math values when percent is selected...
 function updateMathArrayCent() {
     //evaluate percent
-    operateCent(mathValues[1], mathValues[0], mathValues[2]);
+    sum = operateCent(mathValues[1], mathValues[0], mathValues[2]);
     //display sum
+    
+    console.log('MIDDLE OF updateMathArrayCent()');
+    console.log({sum});
+
     displayProduct.textContent = sum;
     //remove a & operator
     mathValues.shift();
@@ -222,7 +232,12 @@ function updateMathArrayCent() {
     //reset a = sum
     mathValues[0] = sum;
     decOn = false;
-}
+
+    console.log('END OF updateMathArrayCent()');
+    console.log({mathValues});
+    console.log({displayValues});
+
+} //** ---------- */
 
 //update display/math values when function in selected...
 function updateMathArrayFunct() {
@@ -241,8 +256,6 @@ function updateMathArrayFunct() {
 // ------------- //
 // KEY FUNCTIONS //
 // ------------- //
-
-//TODO wrap multi-step button-listeners into single functions to call from buttons or keys
 
 //clear calculator...
 function clearCalc() {
@@ -279,6 +292,8 @@ function toggleNeg() {
     }
 }
 
+//** WORKING -- 1/0 -> = -> % -> functions */
+//TODO -------- 1/0 -> % (returns infinity)
 //log percent based on preceding math function...
 function logPercent() {
     if (mathValues.length === 0) {
@@ -292,6 +307,11 @@ function logPercent() {
         updateMathArrayCent();
         //include '=' in math array
         mathValues.push('=');
+
+        console.log('END OF logPercent()');
+        console.log({mathValues});
+        console.log({displayValues});
+
     }
 }
 
