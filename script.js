@@ -431,6 +431,7 @@ buttonCent.addEventListener('click', () => {
 //number buttons
 const buttonNums = document.querySelectorAll('.num');
 buttonNums.forEach(button => button.addEventListener('click', () => {
+    console.log(button);
     logNums(button);
 }));
 
@@ -459,9 +460,12 @@ buttonEquals.addEventListener('click', () => {
 
 //get key value and matching element
 function getKey(key) {
-    let keyValue = key.key;
-    const keyLogged = document.querySelector(`.key[data-key='${keyValue}']`);
+    const keyLogged = document.querySelector(`.key[data-key='${key.key}']`);
+    let keyType = keyLogged.classList[1];
+    let keyID = keyLogged.id;
     console.log(keyLogged);
+    console.log(keyType);
+    console.log(keyID);
 }
 
 //listen for keydown...
