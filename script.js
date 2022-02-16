@@ -496,6 +496,8 @@ function getKey(key) {
         case (keyAlt === '*'):
             logFuncts(buttonMult);
             break;
+        case (keyAlt === 'Escape'):
+            clearCalc();
         default:
             initKey(keyLogged);
     }
