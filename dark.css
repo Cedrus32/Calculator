@@ -20,7 +20,11 @@ button {
     color: #839496;
 }
 
-.function, .pos-neg, .cent {
+.pos-neg, .cent, #√ {
+    background-color: #91772F;
+}
+
+.function {
     background-color: #32596B;
 }
 
