@@ -33,7 +33,6 @@ themeButtons[1].addEventListener('click', () => {
 
 let sum;
 
-//** ---------- */
 //find percent...
 function findPercent(a, b) {
     if (b === 0) {
@@ -41,10 +40,8 @@ function findPercent(a, b) {
     } else {
         sum = (a / b) * 100;
     }
-    console.log('END OF findPercent()');
-    console.log({sum});
     return sum;
-} //** ---------- */
+}
 
 //find percent of...
 function findPercentOf(a, b) {
@@ -215,16 +212,11 @@ function shiftArrays() {
     displayFormula.textContent = displayValues.join(' ');
 }
 
-//** ---------- */
 //update display/math values when percent is selected...
 function updateMathArrayCent() {
     //evaluate percent
     sum = operateCent(mathValues[1], mathValues[0], mathValues[2]);
     //display sum
-    
-    console.log('MIDDLE OF updateMathArrayCent()');
-    console.log({sum});
-
     displayProduct.textContent = sum;
     //remove a & operator
     mathValues.shift();
@@ -233,11 +225,7 @@ function updateMathArrayCent() {
     mathValues[0] = sum;
     decOn = false;
 
-    console.log('END OF updateMathArrayCent()');
-    console.log({mathValues});
-    console.log({displayValues});
-
-} //** ---------- */
+}
 
 //update display/math values when function in selected...
 function updateMathArrayFunct() {
@@ -251,6 +239,7 @@ function updateMathArrayFunct() {
     //reset a = sum
     mathValues[0] = sum;
     decOn = false;
+
 }
 
 // ------------- //
@@ -274,26 +263,33 @@ function deleteNum() {
     displayFormula.textContent = displayValues.join(' ') + ' ' + a;
 }
 
+//TODO stop [+/-] from logging '-' after 0 / 1 -> %
+
+//** -------------------- */
 //toggle positive/negative value...
 function toggleNeg() {
-    if (mathValues[1] === '=') {
-        scrubEqNeg();
-        displayFormula.textContent = mathValues[0];
-        displayProduct.textContent = '';
+    if (displayProduct.textContent === 'error' ) {
+        displayProduct.textContent = 'error';
     } else {
-        if (a === '') {
-            a = '-'
-        } else if (a === '-') {
-            a = '';
-        } else if (a !== '' && a !== '-') {
-            a *= -1;
+        if (mathValues[1] === '=') {
+            scrubEqNeg();
+            displayFormula.textContent = mathValues[0];
+            displayProduct.textContent = '';
+        } else {
+    
+            if (a === '') {
+                a = '-'
+            } else if (a === '-') {
+                a = '';
+            } else if (a !== '' && a !== '-') {
+                a *= -1;
+            }
+            displayFormula.textContent = displayValues.join(' ') + ' ' + a;
         }
-        displayFormula.textContent = displayValues.join(' ') + ' ' + a;
     }
-}
+} //** -------------------- */
 
-//** WORKING -- 1/0 -> = -> % -> functions */
-//TODO -------- 1/0 -> % (returns infinity)
+//** -------------------- */
 //log percent based on preceding math function...
 function logPercent() {
     if (mathValues.length === 0) {
@@ -307,13 +303,13 @@ function logPercent() {
         updateMathArrayCent();
         //include '=' in math array
         mathValues.push('=');
-
-        console.log('END OF logPercent()');
-        console.log({mathValues});
-        console.log({displayValues});
-
     }
-}
+
+    console.log('END OF logPercent()');
+    console.log({mathValues});
+    console.log({displayValues});
+
+} //** -------------------- */
 
 //log numbers...
 function logNums(button) {
@@ -328,6 +324,7 @@ function logNums(button) {
     displayFormula.textContent += button.id;
 }
 
+//** -------------------- */
 //log functions...
 function logFuncts(button) {
     
@@ -376,7 +373,12 @@ function logFuncts(button) {
             }
         }
     }
-}
+
+    console.log('END OF logFuncts()');
+    console.log({mathValues});
+    console.log({displayValues});
+
+} //** -------------------- */
 
 //log decimal key
 function logDec() {
@@ -397,6 +399,7 @@ function logDec() {
     decOn = true;
 }
 
+//** -------------------- */
 //run equals...
 function runEquals() {
     if (mathValues.length === 0 || (mathValues.length === 2 && a === '')) {
@@ -409,8 +412,13 @@ function runEquals() {
         updateMathArrayFunct();
         //include '=' in math array
         mathValues.push('=');
+
+        console.log('END OF runEquals()');
+        console.log({mathValues});
+        console.log({displayValues});
+
     }
-}
+} //** -------------------- */
 
 // ---------------- //
 // BUTTON LISTENERS //
