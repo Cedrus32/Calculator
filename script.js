@@ -453,23 +453,16 @@ buttonEquals.addEventListener('click', () => {
 });
 
 
-// // ------------ //
-// // KEY LISTENER //
-// // ------------ //
+// ------------ //
+// KEY LISTENER //
+// ------------ //
 
-// // initiate key function
-// function initKey(key) {
-//     switch(key) {
-//         case ''
-//     }
-// }
+//get key value and matching element
+function getKey(key) {
+    let keyValue = key.key;
+    const keyLogged = document.querySelector(`.key[data-key='${keyValue}']`);
+    console.log(keyLogged);
+}
 
-// //get key value and matching element
-// function getKey(key) {
-//     let keyValue = key.key;
-//     const keyLogged = document.querySelector(`.key[data-key='${keyValue}']`);
-//     initKey(keyLogged);
-// }
-
-// //listen for keydown...
-// window.addEventListener('keydown', getKey);
+//listen for keydown...
+window.addEventListener('keydown', getKey);
