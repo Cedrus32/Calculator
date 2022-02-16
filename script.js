@@ -263,9 +263,6 @@ function deleteNum() {
     displayFormula.textContent = displayValues.join(' ') + ' ' + a;
 }
 
-//TODO stop [+/-] from logging '-' after 0 / 1 -> %
-
-//** -------------------- */
 //toggle positive/negative value...
 function toggleNeg() {
     if (displayProduct.textContent === 'error' ) {
@@ -287,9 +284,8 @@ function toggleNeg() {
             displayFormula.textContent = displayValues.join(' ') + ' ' + a;
         }
     }
-} //** -------------------- */
+}
 
-//** -------------------- */
 //log percent based on preceding math function...
 function logPercent() {
     if (mathValues.length === 0) {
@@ -305,11 +301,7 @@ function logPercent() {
         mathValues.push('=');
     }
 
-    console.log('END OF logPercent()');
-    console.log({mathValues});
-    console.log({displayValues});
-
-} //** -------------------- */
+}
 
 //log numbers...
 function logNums(button) {
@@ -324,7 +316,6 @@ function logNums(button) {
     displayFormula.textContent += button.id;
 }
 
-//** -------------------- */
 //log functions...
 function logFuncts(button) {
     
@@ -373,12 +364,7 @@ function logFuncts(button) {
             }
         }
     }
-
-    console.log('END OF logFuncts()');
-    console.log({mathValues});
-    console.log({displayValues});
-
-} //** -------------------- */
+}
 
 //log decimal key
 function logDec() {
@@ -399,7 +385,6 @@ function logDec() {
     decOn = true;
 }
 
-//** -------------------- */
 //run equals...
 function runEquals() {
     if (mathValues.length === 0 || (mathValues.length === 2 && a === '')) {
@@ -412,13 +397,8 @@ function runEquals() {
         updateMathArrayFunct();
         //include '=' in math array
         mathValues.push('=');
-
-        console.log('END OF runEquals()');
-        console.log({mathValues});
-        console.log({displayValues});
-
     }
-} //** -------------------- */
+}
 
 // ---------------- //
 // BUTTON LISTENERS //
