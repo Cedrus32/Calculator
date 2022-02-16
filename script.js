@@ -467,26 +467,23 @@ function initKey(key) {
     console.log(keyID);
 
     //check key type (class list --> del-clear, num, function, dec, eq)
-    switch (keyType) {
-        case 'del-clear':
-            //check if id === #clear || id === #del
-            switch (keyID) {
-                case 'clear':
-                    clearCalc();
-                    break;
-                case 'del':
-                    deleteNum();
-            } //TODO no break in nested switch-case -- check for bug?
-        case 'num':
+    switch (true) {
+        case (keyType === 'clear-del' && keyID === 'clear'):
+            clearCalc();
+            break;
+        case (keyType === 'clear-del' && keyID === 'del'):
+            deleteNum();
+            break;
+        case (keyType === 'num'):
             logNums(key);
             break;
-        case 'function':
+        case (keyType === 'function'):
             logFuncts(key);
             break;
-        case 'dec':
+        case (keyType === 'dec'):
             logDec();
             break;
-        case 'eq':
+        case (keyType === 'eq'):
             runEquals();
     }
 }
