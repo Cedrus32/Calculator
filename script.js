@@ -431,7 +431,6 @@ buttonCent.addEventListener('click', () => {
 //number buttons
 const buttonNums = document.querySelectorAll('.num');
 buttonNums.forEach(button => button.addEventListener('click', () => {
-    console.log(button);
     logNums(button);
 }));
 
@@ -463,9 +462,6 @@ function initKey(key) {
     let keyType = key.classList[1];
     let keyID = key.id;
 
-    console.log(keyType);
-    console.log(keyID);
-
     //check key type (class list --> del-clear, num, function, dec, eq)
     switch (true) {
         case (keyType === 'clear-del' && keyID === 'clear'):
@@ -491,8 +487,18 @@ function initKey(key) {
 //get key value and matching element
 function getKey(key) {
     const keyLogged = document.querySelector(`.key[data-key='${key.key}']`);
-    console.log(keyLogged);
-    initKey(keyLogged);
+    const keyAlt = key.key;
+    const buttonMult = document.querySelector('#x');
+    switch (true) {
+        case (keyAlt === 'Enter'):
+            runEquals();
+            break;
+        case (keyAlt === '*'):
+            logFuncts(buttonMult);
+            break;
+        default:
+            initKey(keyLogged);
+    }
 }
 
 //listen for keydown...
