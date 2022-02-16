@@ -458,14 +458,44 @@ buttonEquals.addEventListener('click', () => {
 // KEY LISTENER //
 // ------------ //
 
+// initiate key function
+function initKey(key) {
+    let keyType = key.classList[1];
+    let keyID = key.id;
+
+    console.log(keyType);
+    console.log(keyID);
+
+    //check key type (class list --> del-clear, num, function, dec, eq)
+    switch (keyType) {
+        case 'del-clear':
+            //check if id === #clear || id === #del
+            switch (keyID) {
+                case 'clear':
+                    clearCalc();
+                    break;
+                case 'del':
+                    deleteNum();
+            } //TODO no break in nested switch-case -- check for bug?
+        case 'num':
+            logNums(key);
+            break;
+        case 'function':
+            logFuncts(key);
+            break;
+        case 'dec':
+            logDec();
+            break;
+        case 'eq':
+            runEquals();
+    }
+}
+
 //get key value and matching element
 function getKey(key) {
     const keyLogged = document.querySelector(`.key[data-key='${key.key}']`);
-    let keyType = keyLogged.classList[1];
-    let keyID = keyLogged.id;
     console.log(keyLogged);
-    console.log(keyType);
-    console.log(keyID);
+    initKey(keyLogged);
 }
 
 //listen for keydown...
