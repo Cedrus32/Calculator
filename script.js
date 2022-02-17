@@ -2,8 +2,6 @@
 // THEMES //
 // ------ //
 
-//TODO -- add different coloring to [+/-] [%] [√] (not keyboard enabled)
-
 //TODO for finished, light is default
 //TODO for testing, dark is default...
 //TODO .html --> <link ... light.css>
@@ -498,7 +496,6 @@ function initKey(key) {
 //get key value and matching element
 function getKey(key) {
     const keyLogged = document.querySelector(`.key[data-key='${key.key}']`);
-    console.log(keyLogged);
     const keyAlt = key.key;
     const buttonMult = document.querySelector('#x');
     switch (true) {
@@ -517,10 +514,3 @@ function getKey(key) {
 
 //listen for keydown...
 window.addEventListener('keydown', getKey);
-
-//TESTING//
-function testValues() {
-    console.log({mathValues});
-    console.log({displayValues});
-    console.log({a});
-}
