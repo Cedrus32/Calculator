@@ -114,8 +114,13 @@ function div(a, b) {
 }
 
 //square root...
-function sqrt(a, b) {
-    sum = a ** (1/b);
+function root(a, b) {
+    if (a < 0) {
+        a *= -1;
+        sum = (a ** (1/b)) * -1;
+    } else {
+        sum = a ** (1/b);
+    }
     return sum;
 }
 
@@ -135,7 +140,7 @@ function operateFunct(operator, a, b) {
             div(a, b);
             break;
         case '√':
-            sqrt(a, b);
+            root(a, b);
             break;
     }
 
