@@ -183,7 +183,6 @@ function scrubEqNeg() {
     displayValues[0] = mathValues[0];
 }
 
-//** ---------- ---------- ---------- **/
 //check if function button is selected multiple times sequentially
 function checkFunctRepeat(id) {
     const functs = ['+', '-', 'x', '/'];
@@ -341,7 +340,7 @@ function logFuncts(button) {
     
     if ((mathValues.length === 0 && a === '') ||
         (a === '' && repeatFunct === true && mathValues[1] !== '=') ||
-        displayProduct.textContent === 'error') {
+        (displayProduct.textContent === 'error' && mathValues[1] !== '=')) {
         displayProduct.textContent = 'error';
     } else {
         //reset decOn
@@ -407,6 +406,7 @@ function logDec() {
     decOn = true;
 }
 
+//** ---------- ---------- ---------- **/
 //run equals...
 function runEquals() {
     if (mathValues.length === 0 || (mathValues.length === 2 && a === '')) {
@@ -419,6 +419,11 @@ function runEquals() {
         updateMathArrayFunct();
         //include '=' in math array
         mathValues.push('=');
+
+        console.log({mathValues});
+        console.log({displayValues});
+        console.log({a});
+
     }
 }
 
