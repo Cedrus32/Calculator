@@ -178,6 +178,13 @@ function scrubEqNeg() {
     displayValues[0] = mathValues[0];
 }
 
+//** ---------- ---------- ---------- **/
+//check if function button is selected multiple times sequentially
+function checkFunctRepeat(id) {
+    const functs = ['+', '-', 'x', '/'];
+    return functs.some(element => id === element);
+}
+
 //scrub 'equals' when selecting another function...
 function scrubEqFunct() {
     //remove '=' from math array
@@ -308,7 +315,8 @@ function logNums(button) {
 
     //if entering a number after getting sum
     if (mathValues[1] === '=' || displayProduct.textContent === 'error') {
-        clearCalc();
+        // clearCalc();
+        displayProduct.textContent = '';
     }
 
     //concat a, update displayFormula
@@ -316,10 +324,19 @@ function logNums(button) {
     displayFormula.textContent += button.id;
 }
 
+//** ---------- ---------- ---------- **/
 //log functions...
 function logFuncts(button) {
+
+    console.log({mathValues});
+    console.log({displayValues});
+    console.log({a});
+
+    let repeatFunct = checkFunctRepeat(button.id);
     
-    if ((mathValues.length === 0 && a === '') || displayProduct.textContent === 'error' ) {
+    if ((mathValues.length === 0 && a === '') ||
+        (a === '' && repeatFunct === true && mathValues[1] !== '=') ||
+        displayProduct.textContent === 'error') {
         displayProduct.textContent = 'error';
     } else {
         //reset decOn
@@ -487,6 +504,7 @@ function initKey(key) {
 //get key value and matching element
 function getKey(key) {
     const keyLogged = document.querySelector(`.key[data-key='${key.key}']`);
+    console.log(keyLogged);
     const keyAlt = key.key;
     const buttonMult = document.querySelector('#x');
     switch (true) {
