@@ -183,12 +183,6 @@ function scrubEqNeg() {
     displayValues[0] = mathValues[0];
 }
 
-//check if function button is selected multiple times sequentially
-function checkFunctRepeat(id) {
-    const functs = ['+', '-', 'x', '/'];
-    return functs.some(element => id === element);
-}
-
 //scrub 'equals' when selecting another function...
 function scrubEqFunct() {
     //remove '=' from math array
@@ -213,14 +207,18 @@ function pushFunct2Arrays(button) {
 
 //replace operators...
 function shiftArrays() {
+
+    let lastMathVal = mathValues.length - 1;
+    let lastDisplayVal = displayValues.length - 1;
+
     //replace/remove functions (operatorValues)
-    mathValues[1] = mathValues[2];
+    mathValues[lastMathVal - 1] = mathValues[lastMathVal];
     mathValues.pop();
     //replace/remove functions (displayValues)
-    displayValues[1] = displayValues[2];
+    displayValues[lastDisplayVal - 1] = displayValues[lastDisplayVal];
     displayValues.pop();
     //update display
-    displayFormula.textContent = displayValues.join(' ');
+    displayFormula.textContent = displayValues.join(' ') + ' ';
 }
 
 //update display/math values when percent is selected...
@@ -328,18 +326,10 @@ function logNums(button) {
     displayFormula.textContent += button.id;
 }
 
-//** ---------- ---------- ---------- **/
 //log functions...
 function logFuncts(button) {
-
-    console.log({mathValues});
-    console.log({displayValues});
-    console.log({a});
-
-    let repeatFunct = checkFunctRepeat(button.id);
     
     if ((mathValues.length === 0 && a === '') ||
-        (a === '' && repeatFunct === true && mathValues[1] !== '=') ||
         (displayProduct.textContent === 'error' && mathValues[1] !== '=')) {
         displayProduct.textContent = 'error';
     } else {
@@ -406,7 +396,6 @@ function logDec() {
     decOn = true;
 }
 
-//** ---------- ---------- ---------- **/
 //run equals...
 function runEquals() {
     if (mathValues.length === 0 || (mathValues.length === 2 && a === '')) {
@@ -419,11 +408,6 @@ function runEquals() {
         updateMathArrayFunct();
         //include '=' in math array
         mathValues.push('=');
-
-        console.log({mathValues});
-        console.log({displayValues});
-        console.log({a});
-
     }
 }
 
@@ -533,3 +517,10 @@ function getKey(key) {
 
 //listen for keydown...
 window.addEventListener('keydown', getKey);
+
+//TESTING//
+function testValues() {
+    console.log({mathValues});
+    console.log({displayValues});
+    console.log({a});
+}
