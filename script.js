@@ -2,12 +2,6 @@
 // THEMES //
 // ------ //
 
-//TODO for finished, light is default
-//TODO for testing, dark is default...
-//TODO .html --> <link ... light.css>
-//TODO .html --> <link ... dark.css>
-//TODO .js --> toggle dark
-
 //...switch theme...
 function switchTheme(src) {
     const themeCSS = document.querySelectorAll('.theme-CSS');
