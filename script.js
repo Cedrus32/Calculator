@@ -282,11 +282,10 @@ function clearCalc() {
 
 //delete number...
 function deleteNum() {
+    a = String(a);
     a = a.slice(0, -1);
     displayFormula.textContent = displayValues.join(' ') + ' ' + a;
 }
-
-//todo delete when number is manually entered negative (3 -> [+/-])     ** ([+/-] --> 3 WORKS)
 
 //toggle positive/negative value...
 function toggleNeg() {
