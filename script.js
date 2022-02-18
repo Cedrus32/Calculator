@@ -31,7 +31,7 @@ themeButtons[1].addEventListener('click', () => {
 
 let sum;
 
-//find percent...
+//...find percent
 function findPercent(a, b) {
     if (b === 0) {
         sum = 'error';
@@ -41,18 +41,19 @@ function findPercent(a, b) {
     return sum;
 }
 
-//find percent of...
+//...find percent of
 function findPercentOf(a, b) {
     sum = b * (a / 100);
     return sum;
 }
 
-//mark up...
+//...mark up
 function markUp(a, b) {
     sum = a * (1 + (b / 100));
     return sum;
 }
 
+//...mark down
 function markDown(a, b) {
     sum = a * (1 - (b / 100));
     return sum;
@@ -77,7 +78,6 @@ function operateCent(operator, a, b) {
     if (sum === 'error') {
         return sum;
     } else {
-        //round sum
         sum = roundSum(sum);
         return sum;
     }
@@ -111,7 +111,7 @@ function div(a, b) {
     return sum;
 }
 
-//square root...
+//...square root
 function root(a, b) {
     if (a < 0) {
         a *= -1;
@@ -145,13 +145,12 @@ function operateFunct(operator, a, b) {
     if (sum === 'error') {
         return sum;
     } else {
-        //round sum
         sum = roundSum(sum);
         return sum;
     }
 }
 
-//round sum
+//...round sum...
 function roundSum(sum) {
     newSum = Math.round(sum * 100) / 100;
     return newSum;
@@ -172,7 +171,8 @@ const displayProduct = document.querySelector('.product');
 displayFormula.textContent = ' ';
 displayProduct.textContent = ' ';
 
-//scrub `=` when selecting [+/-]...
+//...scrub `=` from mathArray when selecting [+/-]...
+//...update displayValues...
 function scrubEqNeg() {
     //remove `=` from math array
     mathValues.pop();
@@ -183,7 +183,8 @@ function scrubEqNeg() {
     displayValues[0] = mathValues[0];
 }
 
-//scrub 'equals' when selecting another function...
+//...scrub `=` from mathArray when selecting [function]...
+//...update displayValues...
 function scrubEqFunct() {
     //remove '=' from math array
     mathValues.pop();
@@ -192,63 +193,68 @@ function scrubEqFunct() {
     displayValues[0] = mathValues[0];
 }
 
-//push a to both arrays...
+//...push `a` to both arrays...
 function pushA2Arrays() {
     a = Number(a);
     mathValues.push(a);
     displayValues.push(a);
 }
 
-//push function to both arrays...
+//...push `function` to both arrays...
 function pushFunct2Arrays(button) {
     mathValues.push(button.id);
     displayValues.push(button.id);
 }
 
-//replace operators...
-function shiftArrays() {
-
+//...replace operators...
+function replaceOps() {
     let lastMathVal = mathValues.length - 1;
     let lastDisplayVal = displayValues.length - 1;
 
-    //replace/remove functions (operatorValues)
+    //replace/remove last function in mathValues
     mathValues[lastMathVal - 1] = mathValues[lastMathVal];
     mathValues.pop();
-    //replace/remove functions (displayValues)
+    //replace/remove last function in displayValues
     displayValues[lastDisplayVal - 1] = displayValues[lastDisplayVal];
     displayValues.pop();
     //update display
     displayFormula.textContent = displayValues.join(' ') + ' ';
 }
 
+//...throw 'exceeds memory' error...
 function exceedsMem() {
     displayFormula.classList.add('exceeds-mem');
     displayFormula.textContent = 'calculator memory exceeded';
     displayProduct.textContent = 'error';
 }
 
-//update display/math values when percent is selected...
+//...update display/math values when selecting [%]...
 function updateMathArrayCent() {
     //evaluate percent
     sum = operateCent(mathValues[1], mathValues[0], mathValues[2]);
+
+    //check sum length
     if (String(sum).length > 11) {
         exceedsMem();
     } else {
         //display sum
         displayProduct.textContent = sum;
-        //remove a & operator
+        //remove `a` & `function`
         mathValues.shift();
         mathValues.shift();
         //reset a = sum
         mathValues[0] = sum;
+        //reset decOn
         decOn = false;
     }
 }
 
-//update display/math values when function in selected...
+//...find sum...
+//...update mathValues & display...
 function updateMathArrayFunct() {
     //evaluate function
     operateFunct(mathValues[1], mathValues[0], mathValues[2]);
+    //check sum length
     if (String(sum).length > 11) {
         exceedsMem();
     } else {
@@ -259,6 +265,7 @@ function updateMathArrayFunct() {
         mathValues.shift();
         //reset a = sum
         mathValues[0] = sum;
+        //reset decOn
         decOn = false;
     }
 }
@@ -288,19 +295,22 @@ function deleteNum() {
 //toggle positive/negative value...
 function toggleNeg() {
 
+    //reset displayFormula class (remove red)
     if (displayFormula.textContent !== 'calculator memory exceeded') {
         displayFormula.classList.remove('exceeds-mem');
     }
 
+    //check for error message
     if (displayProduct.textContent === 'error' ) {
         displayProduct.textContent = 'error';
     } else {
+        //srub `=` from mathValues, update display
         if (mathValues[1] === '=') {
             scrubEqNeg();
             displayFormula.textContent = mathValues[0];
             displayProduct.textContent = ' ';
         } else {
-    
+            //toggle negative
             if (a === '') {
                 a = '-'
             } else if (a === '-') {
@@ -308,21 +318,23 @@ function toggleNeg() {
             } else if (a !== '' && a !== '-') {
                 a *= -1;
             }
+            //update display
             displayFormula.textContent = displayValues.join(' ') + ' ' + a;
         }
     }
 }
 
-//log percent based on preceding math function...
+//log percent...
 function logPercent() {
+    //check for error
     if (mathValues.length === 0) {
         displayFormula.textContent = ' ';
         displayProduct.textContent = 'error';
     } else {
-        //save a to both arrays
+        //add `a` to both arrays
         pushA2Arrays()
         a = '';
-        //evaluate percentage, update math array
+        //evaluate `%`, update mathValues
         updateMathArrayCent();
         //include '=' in math array
         mathValues.push('=');
@@ -332,16 +344,17 @@ function logPercent() {
 //log numbers...
 function logNums(button) {
 
+    //reset displayFormula class (removes red)
     displayFormula.classList.remove('exceeds-mem');
 
-    //if entering a number after getting sum
+    //check for error message, clear calculator
     if (mathValues[1] === '=' || displayProduct.textContent === 'error' || 
         displayFormula.textContent === 'calculator memory exceeded') {
         clearCalc();
         displayProduct.textContent = ' ';
     }
 
-    //concat a, update displayFormula
+    //concat `a`, update display
     a += button.id;
     displayFormula.textContent += button.id;
 
@@ -354,6 +367,7 @@ function logNums(button) {
 //log functions...
 function logFuncts(button) {
     
+    //check for error message
     if ((mathValues.length === 0 && a === '') ||
         (displayProduct.textContent === 'error' && mathValues[1] !== '=')) {
         displayProduct.textContent = 'error';
@@ -363,38 +377,39 @@ function logFuncts(button) {
             decOn = false;
         }
 
-        //if `=` button was previously selected,
-        //scrub math array, show sum on formula display
+        //scrub `=` from mathValues, update display
         if (mathValues[1] === '=') {
             scrubEqFunct();
             displayFormula.textContent = displayValues;
             displayProduct.textContent = ' ';
         }
 
-        //if a !== null, add A to arrays
+        //add `a` to both arrays
         if (a !== '') {
             pushA2Arrays()
         }
 
-        if (displayValues[2] === 0) {
+        //check for /0 when selecting sequential `functions`
+        if (displayValues[displayValues.length - 2] === '/' &&
+            displayValues[displayValues.length - 1] === 0) {
             displayValues.pop();
             displayProduct.textContent = 'error';
         } else {
-            //add FUNCTION to arrays
+            //add `function` to both arrays
             pushFunct2Arrays(button);
             //update display
             displayFormula.textContent = displayValues.join(' ');
             displayFormula.textContent += ' ';
             a = '';
 
-            //if 2 functions selected sequentially
-            //replace original function with second function (both arrays)
+            //if 2 functions selected sequentially...
+            //replace original `function` with new `function` in both arrays
             if (mathValues.length === 3) {
-                shiftArrays();
+                replaceOps();
             }
 
-            //when operating multiple numbers w/out hitting `=`
-            //replace math array [0]/[1] with sum...
+            //when operating sequential functions...
+            //replace mathValues [0]/[1] with sum
             if (mathValues.length > 3) {
                 updateMathArrayFunct();
             }
@@ -404,12 +419,13 @@ function logFuncts(button) {
 
 //log decimal key
 function logDec() {
+    //set initial `a` after [=]
     if (mathValues[1] === '=') {
         clearCalc();
         a += '0.';
         displayFormula.textContent += '0.';
     } else {
-        //check in decimal previously selected
+        //check if decimal previously selected
         if (decOn === true) {
             a += '';
             displayFormula.textContent += '';
@@ -423,13 +439,14 @@ function logDec() {
 
 //run equals...
 function runEquals() {
+    //check for error
     if (mathValues.length === 0 || (mathValues.length === 2 && a === '')) {
         displayProduct.textContent = 'error';
     } else {
-        //add second value to both arrays
+        //add `a` value to both arrays
         pushA2Arrays()
         a = '';
-        //evaluate function, update math array...
+        //evaluate `function`, update mathValues...
         updateMathArrayFunct();
         //include '=' in math array
         mathValues.push('=');
@@ -499,7 +516,7 @@ function initKey(key) {
     let keyType = key.classList[1];
     let keyID = key.id;
 
-    //check key type (class list --> del-clear, num, function, dec, eq)
+    //check key type
     switch (true) {
         case (keyType === 'clear-del' && keyID === 'clear'):
             clearCalc();
