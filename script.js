@@ -332,7 +332,7 @@ function logPercent() {
 //log numbers...
 function logNums(button) {
 
-    displayFormula.classList.remove('exceed-mem');
+    displayFormula.classList.remove('exceeds-mem');
 
     //if entering a number after getting sum
     if (mathValues[1] === '=' || displayProduct.textContent === 'error' || 
