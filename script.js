@@ -221,14 +221,18 @@ function shiftArrays() {
     displayFormula.textContent = displayValues.join(' ') + ' ';
 }
 
+function exceedsMem() {
+    displayFormula.classList.add('exceeds-mem');
+    displayFormula.textContent = 'calculator memory exceeded';
+    displayProduct.textContent = 'error';
+}
+
 //update display/math values when percent is selected...
 function updateMathArrayCent() {
     //evaluate percent
     sum = operateCent(mathValues[1], mathValues[0], mathValues[2]);
     if (String(sum).length > 11) {
-        displayFormula.classList.add('exceed-mem');
-        displayFormula.textContent = 'calculator memory exceeded';
-        displayProduct.textContent = 'error';
+        exceedsMem();
     } else {
         //display sum
         displayProduct.textContent = sum;
@@ -246,9 +250,7 @@ function updateMathArrayFunct() {
     //evaluate function
     operateFunct(mathValues[1], mathValues[0], mathValues[2]);
     if (String(sum).length > 11) {
-        displayFormula.classList.add('exceed-mem');
-        displayFormula.textContent = 'calculator memory exceeded';
-        displayProduct.textContent = 'error';
+        exceedsMem();
     } else {
          //display sum
         displayProduct.textContent = sum;
@@ -260,11 +262,6 @@ function updateMathArrayFunct() {
         decOn = false;
     }
 }
-
-//todo with each keydown or click, check length of displays via checkDisplayLen()
-//todo checkDisplayLen() checks displayFormula length && displayProduct length
-//todo if displayFormula length > 29, automatically push sum to displayFormula
-//todo if displayProduct length > 11, produce error (scroll in display formula, red letters) stating calc memory has run out
 
 
 // ------------- //
