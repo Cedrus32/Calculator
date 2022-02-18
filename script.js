@@ -226,6 +226,7 @@ function updateMathArrayCent() {
     //evaluate percent
     sum = operateCent(mathValues[1], mathValues[0], mathValues[2]);
     if (String(sum).length > 11) {
+        displayFormula.classList.add('exceed-mem');
         displayFormula.textContent = 'calculator memory exceeded';
         displayProduct.textContent = 'error';
     } else {
@@ -245,6 +246,7 @@ function updateMathArrayFunct() {
     //evaluate function
     operateFunct(mathValues[1], mathValues[0], mathValues[2]);
     if (String(sum).length > 11) {
+        displayFormula.classList.add('exceed-mem');
         displayFormula.textContent = 'calculator memory exceeded';
         displayProduct.textContent = 'error';
     } else {
@@ -288,6 +290,11 @@ function deleteNum() {
 
 //toggle positive/negative value...
 function toggleNeg() {
+
+    if (displayFormula.textContent !== 'calculator memory exceeded') {
+        displayFormula.classList.remove('exceed-mem');
+    }
+
     if (displayProduct.textContent === 'error' ) {
         displayProduct.textContent = 'error';
     } else {
@@ -327,6 +334,8 @@ function logPercent() {
 
 //log numbers...
 function logNums(button) {
+
+    displayFormula.classList.remove('exceed-mem');
 
     //if entering a number after getting sum
     if (mathValues[1] === '=' || displayProduct.textContent === 'error' || 
