@@ -289,7 +289,7 @@ function deleteNum() {
 function toggleNeg() {
 
     if (displayFormula.textContent !== 'calculator memory exceeded') {
-        displayFormula.classList.remove('exceed-mem');
+        displayFormula.classList.remove('exceeds-mem');
     }
 
     if (displayProduct.textContent === 'error' ) {
