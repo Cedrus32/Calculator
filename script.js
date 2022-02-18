@@ -254,7 +254,7 @@ function updateMathArrayFunct() {
     } else {
          //display sum
         displayProduct.textContent = sum;
-        //remove a & operator
+        //remove `a` & `function`
         mathValues.shift();
         mathValues.shift();
         //reset a = sum
@@ -286,6 +286,8 @@ function deleteNum() {
     displayFormula.textContent = displayValues.join(' ') + ' ' + a;
 }
 
+//todo delete when number is manually entered negative (3 -> [+/-])     ** ([+/-] --> 3 WORKS)
+
 //toggle positive/negative value...
 function toggleNeg() {
 
@@ -304,12 +306,26 @@ function toggleNeg() {
             displayFormula.textContent = mathValues[0];
             displayProduct.textContent = ' ';
         } else {
-            //toggle negative
-            if (a === '') {
+            let mathValuesLast = mathValues.length - 1;
+            if (typeof mathValues[mathValuesLast] === 'number') {
+                //when modifying sum after [=] and `=` scrub (modifying in array, not mem)
+                //save last math value to `a`, remove last value from both arrays
+                a = mathValues[mathValuesLast];
+                mathValues.pop();
+                displayValues.pop();
+                //modify `a`, save to both arrays
+                a *= -1;
+                mathValues.push(a);
+                displayValues.push(mathValues[mathValuesLast]);
+                a = '';
+            } else if (a === '') {
+                //when selecting initial number before [=] (modifying in mem, non array)
                 a = '-'
             } else if (a === '-') {
+                //when selecting initial number before [=] (modifying in mem, not array)
                 a = '';
-            } else if (a !== '' && a !== '-') {
+            } else if (a !== '') {
+                //when selecting additional number before [=] (modyifying in mem, not array)
                 a *= -1;
             }
             //update display
@@ -505,7 +521,7 @@ buttonEquals.addEventListener('click', () => {
 // KEY LISTENER //
 // ------------ //
 
-// initiate key function
+// initiate key function...
 function initKey(key) {
     let keyType = key.classList[1];
     let keyID = key.id;
@@ -532,7 +548,7 @@ function initKey(key) {
     }
 }
 
-//get key value and matching element
+//get key value and matching element...
 function getKey(key) {
     const keyLogged = document.querySelector(`.key[data-key='${key.key}']`);
     const keyAlt = key.key;
