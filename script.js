@@ -169,6 +169,8 @@ let mathValues = [];
 let displayValues = [];
 const displayFormula = document.querySelector('.formula');
 const displayProduct = document.querySelector('.product');
+displayFormula.textContent = ' ';
+displayProduct.textContent = ' ';
 
 //scrub `=` when selecting [+/-]...
 function scrubEqNeg() {
@@ -223,31 +225,45 @@ function shiftArrays() {
 function updateMathArrayCent() {
     //evaluate percent
     sum = operateCent(mathValues[1], mathValues[0], mathValues[2]);
-    //display sum
-    displayProduct.textContent = sum;
-    //remove a & operator
-    mathValues.shift();
-    mathValues.shift();
-    //reset a = sum
-    mathValues[0] = sum;
-    decOn = false;
-
+    if (String(sum).length > 11) {
+        displayFormula.textContent = 'calculator memory exceeded';
+        displayProduct.textContent = 'error';
+    } else {
+        //display sum
+        displayProduct.textContent = sum;
+        //remove a & operator
+        mathValues.shift();
+        mathValues.shift();
+        //reset a = sum
+        mathValues[0] = sum;
+        decOn = false;
+    }
 }
 
 //update display/math values when function in selected...
 function updateMathArrayFunct() {
     //evaluate function
     operateFunct(mathValues[1], mathValues[0], mathValues[2]);
-    //display sum
-    displayProduct.textContent = sum;
-    //remove a & operator
-    mathValues.shift();
-    mathValues.shift();
-    //reset a = sum
-    mathValues[0] = sum;
-    decOn = false;
-
+    if (String(sum).length > 11) {
+        displayFormula.textContent = 'calculator memory exceeded';
+        displayProduct.textContent = 'error';
+    } else {
+         //display sum
+        displayProduct.textContent = sum;
+        //remove a & operator
+        mathValues.shift();
+        mathValues.shift();
+        //reset a = sum
+        mathValues[0] = sum;
+        decOn = false;
+    }
 }
+
+//todo with each keydown or click, check length of displays via checkDisplayLen()
+//todo checkDisplayLen() checks displayFormula length && displayProduct length
+//todo if displayFormula length > 29, automatically push sum to displayFormula
+//todo if displayProduct length > 11, produce error (scroll in display formula, red letters) stating calc memory has run out
+
 
 // ------------- //
 // KEY FUNCTIONS //
@@ -278,7 +294,7 @@ function toggleNeg() {
         if (mathValues[1] === '=') {
             scrubEqNeg();
             displayFormula.textContent = mathValues[0];
-            displayProduct.textContent = '';
+            displayProduct.textContent = ' ';
         } else {
     
             if (a === '') {
@@ -296,7 +312,7 @@ function toggleNeg() {
 //log percent based on preceding math function...
 function logPercent() {
     if (mathValues.length === 0) {
-        displayFormula.textContent = '';
+        displayFormula.textContent = ' ';
         displayProduct.textContent = 'error';
     } else {
         //save a to both arrays
@@ -307,21 +323,26 @@ function logPercent() {
         //include '=' in math array
         mathValues.push('=');
     }
-
 }
 
 //log numbers...
 function logNums(button) {
 
     //if entering a number after getting sum
-    if (mathValues[1] === '=' || displayProduct.textContent === 'error') {
-        // clearCalc();
-        displayProduct.textContent = '';
+    if (mathValues[1] === '=' || displayProduct.textContent === 'error' || 
+        displayFormula.textContent === 'calculator memory exceeded') {
+        clearCalc();
+        displayProduct.textContent = ' ';
     }
 
     //concat a, update displayFormula
     a += button.id;
     displayFormula.textContent += button.id;
+
+    //control display length
+    if (displayFormula.textContent.length > 28) {
+        runEquals();
+    }
 }
 
 //log functions...
@@ -341,7 +362,7 @@ function logFuncts(button) {
         if (mathValues[1] === '=') {
             scrubEqFunct();
             displayFormula.textContent = displayValues;
-            displayProduct.textContent = '';
+            displayProduct.textContent = ' ';
         }
 
         //if a !== null, add A to arrays
@@ -408,6 +429,7 @@ function runEquals() {
         mathValues.push('=');
     }
 }
+
 
 // ---------------- //
 // BUTTON LISTENERS //
